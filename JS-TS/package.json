@@ -1,0 +1,21 @@
+{
+    "name": "js-ts",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "tsx src/index.ts",
+        "build": "npx tsc",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "module",
+    "devDependencies": {
+        "@types/node": "^26.0.1",
+        "prettier": "^3.8.4",
+        "typescript": "^6.0.3"
+    }
+}
