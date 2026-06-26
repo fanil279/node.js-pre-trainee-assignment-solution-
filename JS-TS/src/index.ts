@@ -5,50 +5,121 @@ import {
     partition,
     groupBy,
 } from './solutions/array-helpers.ts';
+
 import { createTodo } from './solutions/todo-factory.ts';
 import { addTodo, updateTodo } from './solutions/todo-crud.ts';
 import { toggleAll, clearCompleted, countByStatus } from './solutions/todo-bulk.ts';
+
+import { TodoApi } from './solutions/todo-api.ts';
+import { TodoNotFoundError } from './solutions/repository.ts';
 import { type Todo, TodoStatus } from './solutions/types.ts';
 
-// Array helpers
-const numbers = [1, 2, 3, 4, 5];
-const numbers2 = [
-    { id: 1, tag: 'home' },
-    { id: 2, tag: 'work' },
-    { id: 3, tag: 'home' },
-];
+async function main(): Promise<void> {
+    // Task 2 - Array helpers
+    const numbers = [1, 2, 3, 4, 5];
 
-console.log(mapArray(numbers, (num, _i) => num * 2));
-console.log(filterArray(numbers, (num, _i) => num > 2));
-console.log(reduceArray(numbers, (acc, num, _i) => acc + num, 0));
-console.log(partition(numbers, (num) => num % 2 === 0));
-console.log(groupBy(numbers2, (num2) => num2.tag));
+    const objects = [
+        { id: 1, tag: 'home' },
+        { id: 2, tag: 'work' },
+        { id: 3, tag: 'home' },
+    ];
 
-// Todo factory
-const a = createTodo({ title: 'Learn TypeScript', description: 'In 10 days' });
-const b = createTodo({ title: 'Refactor code' });
+    console.log(
+        'mapArray:',
+        mapArray(numbers, (n) => n * 2),
+    );
+    console.log(
+        'filterArray:',
+        filterArray(numbers, (n) => n > 2),
+    );
+    console.log(
+        'reduceArray:',
+        reduceArray(numbers, (acc, n) => acc + n, 0),
+    );
+    console.log(
+        'partition:',
+        partition(numbers, (n) => n % 2 === 0),
+    );
+    console.log(
+        'groupBy:',
+        groupBy(objects, (obj) => obj.tag),
+    );
 
-console.log(a.id);
-console.log(b.id);
+    // Task 3 - Todo Factory
+    const firstTodo = createTodo({
+        title: 'Learn TypeScript',
+        description: 'In 10 days',
+    });
 
-// Todo crud
-const state: Todo[] = [];
+    const secondTodo = createTodo({
+        title: 'Refactor code',
+    });
 
-const todo = createTodo({ title: 'Write tests' });
-const state2 = addTodo(state, todo);
-const state3 = addTodo(state2, createTodo({ title: 'Refactor code' }));
-const state4 = updateTodo(state3, todo.id, { status: TodoStatus.COMPLETED });
+    console.log('Factory Todo 1:', firstTodo);
+    console.log('Factory Todo 2:', secondTodo);
 
-console.log(state);
-console.log(state2);
-console.log(state3);
-console.log(state4);
+    // Task 4 - CRUD
+    const state: Todo[] = [];
 
-// Todo bulk
-const state5 = toggleAll(state4, true);
-const count = countByStatus(state5, TodoStatus.COMPLETED);
-const state6 = clearCompleted(state5);
+    const todo = createTodo({
+        title: 'Write tests',
+    });
 
-console.log(state5);
-console.log(count);
-console.log(state6);
+    const state2 = addTodo(state, todo);
+
+    const state3 = addTodo(
+        state2,
+        createTodo({
+            title: 'Refactor code',
+        }),
+    );
+
+    const state4 = updateTodo(state3, todo.id, {
+        status: TodoStatus.COMPLETED,
+    });
+
+    console.log('Initial state:', state);
+    console.log('After add:', state2);
+    console.log('After second add:', state3);
+    console.log('After update:', state4);
+
+    // ==========================
+    // Task 5 - Bulk operations
+    const completedState = toggleAll(state4, true);
+
+    console.log('Toggle all:', completedState);
+
+    console.log('Completed count:', countByStatus(completedState, TodoStatus.COMPLETED));
+
+    console.log('After clearCompleted:', clearCompleted(completedState));
+
+    // Task 6 & 7 - Todo API + Repository
+    const api = new TodoApi();
+
+    const addedTodo = await api.add({
+        title: 'Learn TypeScript',
+        description: 'Practice every day',
+    });
+
+    console.log('Added:', addedTodo);
+
+    console.log('All todos:', await api.getAll());
+
+    const updatedTodo = await api.update(addedTodo.id, {
+        status: TodoStatus.COMPLETED,
+    });
+
+    console.log('Updated:', updatedTodo);
+
+    await api.remove(addedTodo.id);
+
+    console.log('After remove:', await api.getAll());
+}
+
+main().catch((error) => {
+    if (error instanceof TodoNotFoundError) {
+        console.error(error.message);
+    } else {
+        console.error('Unexpected error:', error);
+    }
+});
