@@ -14,6 +14,8 @@ import { TodoApi } from './solutions/todo-api.ts';
 import { TodoNotFoundError } from './solutions/repository.ts';
 import { type Todo, TodoStatus } from './solutions/types.ts';
 
+import { TodoService } from './solutions/todo-service.ts';
+
 async function main(): Promise<void> {
     // Task 2 - Array helpers
     const numbers = [1, 2, 3, 4, 5];
@@ -114,6 +116,30 @@ async function main(): Promise<void> {
     await api.remove(addedTodo.id);
 
     console.log('After remove:', await api.getAll());
+
+    // Task 8 - Todo Service
+    const service = new TodoService(api);
+
+    service
+        .create('Learn Node.js')
+        .then((todo) => {
+            console.log('Service created:', todo);
+        })
+        .then(() => {
+            return service.search('node');
+        })
+        .then((results) => {
+            console.log('Search results:', results);
+        })
+        .then(() => {
+            return service.toggleStatus(6);
+        })
+        .then((todo) => {
+            console.log('Toggle status results:', todo);
+        })
+        .catch((error) => {
+            console.error('Service error:', error);
+        });
 }
 
 main().catch((error) => {
