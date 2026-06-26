@@ -1,5 +1,5 @@
-import { mapArray, filterArray } from './array-helpers.ts';
-import type { Todo } from '../solutions/types.ts';
+import { mapArray, filterArray } from './array-helpers';
+import type { Todo } from '../solutions/types';
 
 export function addTodo(state: Todo[], todo: Todo): Todo[] {
     return [...state, todo];

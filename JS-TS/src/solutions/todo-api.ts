@@ -1,6 +1,6 @@
-import { createTodo } from './todo-factory.ts';
-import { InMemoryRepository } from './repository.ts';
-import type { Todo, NewTodo } from './types.ts';
+import { createTodo } from './todo-factory';
+import { InMemoryRepository } from './repository';
+import type { Todo, NewTodo } from './types';
 
 export const getRandomDelay = (): number => {
     return Math.floor(Math.random() * 301) + 300;

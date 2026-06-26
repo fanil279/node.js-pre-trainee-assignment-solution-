@@ -1,5 +1,5 @@
-import { TodoApi } from './todo-api.ts';
-import { type Todo, TodoStatus } from './types.ts';
+import { TodoApi } from './todo-api';
+import { type Todo, TodoStatus } from './types';
 
 export class TodoService {
     constructor(private readonly api: TodoApi) {}

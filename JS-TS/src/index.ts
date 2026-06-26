@@ -1,20 +1,14 @@
-import {
-    mapArray,
-    filterArray,
-    reduceArray,
-    partition,
-    groupBy,
-} from './solutions/array-helpers.ts';
+import { mapArray, filterArray, reduceArray, partition, groupBy } from './solutions/array-helpers';
 
-import { createTodo } from './solutions/todo-factory.ts';
-import { addTodo, updateTodo } from './solutions/todo-crud.ts';
-import { toggleAll, clearCompleted, countByStatus } from './solutions/todo-bulk.ts';
+import { createTodo } from './solutions/todo-factory';
+import { addTodo, updateTodo } from './solutions/todo-crud';
+import { toggleAll, clearCompleted, countByStatus } from './solutions/todo-bulk';
 
-import { TodoApi } from './solutions/todo-api.ts';
-import { TodoNotFoundError } from './solutions/repository.ts';
-import { type Todo, TodoStatus } from './solutions/types.ts';
+import { TodoApi } from './solutions/todo-api';
+import { TodoNotFoundError } from './solutions/repository';
+import { type Todo, TodoStatus } from './solutions/types';
 
-import { TodoService } from './solutions/todo-service.ts';
+import { TodoService } from './solutions/todo-service';
 
 async function main(): Promise<void> {
     // Task 2 - Array helpers
