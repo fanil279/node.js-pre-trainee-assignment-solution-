@@ -1,0 +1,34 @@
+Task 01 – Custom Event Emitter
+
+1 - Description
+
+I implemented a custom messaging system by extending Node.js's built-in `EventEmitter` class.
+
+The implementation supports:
+
+* Sending messages with different types (`message`, `notification`, `alert`)
+* Subscribing to all messages
+* Subscribing to a specific message type
+* User management (`addUser`, `removeUser`, `getActiveUsers`, `getUserCount`)
+* Message history limited to the last 10 messages
+* Clearing message history
+* Returning system statistics (message count and active user count)
+* Emitting `user-joined` and `user-left` events when users enter or leave the system
+
+The implementation also validates supported message types and generates unique message IDs using `crypto.randomUUID()`.
+
+
+2 - How to Run
+
+1. Make sure Node.js is installed.
+2. Clone the repository
+3. Install dependencies with npm Install
+4. Open a terminal in the project directory at path Node-Express-Nest\node\src\solutions.
+5. Run the JavaScript file that demonstrates the implementation with node task-01.js.
+
+
+3 - Implementation File
+
+The implementation is provided in:
+
+task-01.js
