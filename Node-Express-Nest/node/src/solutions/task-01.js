@@ -1,5 +1,4 @@
 const { EventEmitter } = require('events');
-const { randomUUID } = require('crypto');
 
 class MyEmitter extends EventEmitter {
     constructor() {
@@ -7,9 +6,10 @@ class MyEmitter extends EventEmitter {
 
         this.messages = [];
         this.users = new Set();
+        this.messageId = 1;
     }
 
-    sendMessage(type, content, sender) {
+    sendMessage(type, content, sender = 'System') {
         const allowedTypes = ['message', 'notification', 'alert'];
 
         if (!allowedTypes.includes(type)) {
@@ -17,21 +17,23 @@ class MyEmitter extends EventEmitter {
         }
 
         const message = {
-            id: randomUUID(),
+            id: this.messageId++,
             type: type,
             content: content,
             timestamp: new Date(),
             sender: sender,
         };
 
+        this.messages.push(message);
+
         this.emit('message', message);
         this.emit(type, message);
 
-        if (this.messages.length === 10) {
+        if (this.messages.length > 100) {
             this.messages.shift();
         }
 
-        this.messages.push(message);
+        return message;
     }
 
     subscribeToMessages(callback) {
@@ -42,8 +44,8 @@ class MyEmitter extends EventEmitter {
         this.on(type, callback);
     }
 
-    getMessageHistory() {
-        return [...this.messages];
+    getMessageHistory(count = 10) {
+        return this.messages.slice(-count);
     }
 
     clearHistory() {
@@ -52,19 +54,33 @@ class MyEmitter extends EventEmitter {
 
     getStats() {
         return {
-            messageCount: this.messages.length,
-            userCount: this.getUserCount(),
+            totalMessages: this.messages.length,
+            activeUsers: this.getUserCount(),
+            messagesByType: this.messages.reduce((acc, msg) => {
+                acc[msg.type] = (acc[msg.type] || 0) + 1;
+                return acc;
+            }, {}),
         };
     }
 
     addUser(username) {
         this.users.add(username);
-        this.emit('user-joined', username);
+
+        this.emit('user-joined', {
+            type: 'user-joined',
+            content: `${username} joined the system`,
+            timestamp: new Date(),
+        });
     }
 
     removeUser(username) {
         this.users.delete(username);
-        this.emit('user-left', username);
+
+        this.emit('user-left', {
+            type: 'user-left',
+            content: `${username} left the system`,
+            timestamp: new Date(),
+        });
     }
 
     getUserCount() {
@@ -75,18 +91,5 @@ class MyEmitter extends EventEmitter {
         return [...this.users];
     }
 }
-
-const emitter = new MyEmitter();
-
-emitter.subscribeToMessages((msg) => {
-    console.log('ALL:', msg);
-});
-
-emitter.subscribeToType('alert', (msg) => {
-    console.log('ALERT:', msg);
-});
-
-emitter.addUser('Fanil');
-emitter.sendMessage('alert', 'Server is down!', 'Admin');
 
 module.exports = MyEmitter;
