@@ -23,7 +23,7 @@ The implementation also validates supported message types and generates unique m
 1. Make sure Node.js is installed.
 2. Clone the repository
 3. Install dependencies with npm Install
-4. Open a terminal in the project directory at path Node-Express-Nest\node\src\solutions.
+4. Open a terminal in the project directory at: Node-Express-Nest\node\src\solutions.
 5. Run the JavaScript file that demonstrates the implementation with node task-01.js.
 
 

@@ -67,6 +67,7 @@ class MyEmitter extends EventEmitter {
         this.users.add(username);
 
         this.emit('user-joined', {
+            id: this.messageId++,
             type: 'user-joined',
             content: `${username} joined the system`,
             timestamp: new Date(),
@@ -77,6 +78,7 @@ class MyEmitter extends EventEmitter {
         this.users.delete(username);
 
         this.emit('user-left', {
+            id: this.messageId++,
             type: 'user-left',
             content: `${username} left the system`,
             timestamp: new Date(),
