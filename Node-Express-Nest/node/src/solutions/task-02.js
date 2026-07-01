@@ -194,7 +194,7 @@ function standardizeDate(date) {
         const parsedDate = new Date(Number(year), Number(month) - 1, Number(day));
         return (
             parsedDate.getFullYear() === Number(year) &&
-            parsedDate.getMonth() === Number(month) - 1 &&
+            parsedDate.getMonth() + 1 === Number(month) &&
             parsedDate.getDate() === Number(day)
         );
     }
