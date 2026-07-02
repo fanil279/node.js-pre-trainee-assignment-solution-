@@ -21,13 +21,13 @@ The implementation processes the file using streams, allowing records to be tran
 
 2 - How to Run
 
-1. Make sure Node.js is installed.
-2. Clone the repository.
-3. Install dependencies with `npm install`.
-4. Open a terminal in the project directory at: `Node-Express-Nest\node\src\solutions`.
+1. Make sure Node.js is installed
+2. Clone the repository
+3. Install dependencies with npm install
+4. Open a terminal in the project directory at: Node-Express-Nest\node\src\solutions
 5. Run the implementation with: node task-02.js
 
-This will process `data/users.csv` and generate the transformed output in `data/users_transformed.csv`.
+This will process data/users.csv and generate the transformed output in data/users_transformed.csv.
 
 
 3 - Implementation Files
