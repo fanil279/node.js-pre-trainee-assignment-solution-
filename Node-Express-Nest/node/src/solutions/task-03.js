@@ -247,7 +247,7 @@ async function createTestFiles() {
         fsPromises.writeFile(files[2], 'Content of file 3 - final data'),
     ]);
 
-    return files;   
+    return files;
 }
 
 function logWithPhase(phase, message) {

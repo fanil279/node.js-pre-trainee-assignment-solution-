@@ -1,0 +1,42 @@
+Task 04 – Build a Mini HTTP Server for ToDos
+
+1 - Description
+
+I implemented a RESTful ToDo API using Node.js built-in http module with in-memory data storage.
+
+The implementation includes:
+
+* HTTP server created using the built-in http module
+* Manual request routing based on HTTP method and URL path
+* Full CRUD operations for todos:
+
+  * Get all todos
+  * Get a todo by ID
+  * Create a new todo
+  * Update an existing todo
+  * Delete a todo
+* Manual JSON request body parsing using streams.
+* Manual path parameter extraction for routes such as /todos/:id
+* Query parameter support for filtering todos by completion status
+* Input validation for title, description, and completed fields
+* Automatic ID generation and timestamp creation
+* Consistent JSON responses with appropriate HTTP status codes
+* CORS support, including handling of preflight OPTIONS requests
+* Error handling for invalid JSON, validation errors, missing resources, unsupported routes, and internal server errors
+
+
+2 - How to Run
+
+1. Make sure Node.js is installed
+2. Clone the repository
+3. Install dependencies with npm install
+4. Open a terminal in the project directory at: Node-Express-Nest\node\src\solutions
+5. Run the implementation with: node task-04.js
+6. Run the test suite with: node task-04-test.js
+
+
+3 - Implementation File
+
+The implementation is provided in:
+
+task-04.js

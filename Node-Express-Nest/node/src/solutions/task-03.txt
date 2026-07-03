@@ -14,13 +14,13 @@ The implementation includes:
   * Poll
   * Check
   * Close Callbacks
-* Explanation of the execution order of synchronous code, microtasks (`process.nextTick()` and `Promise.then()`), and macrotasks.
-* Prediction of the execution order for the provided asynchronous code snippets with explanations.
-* Fix for the race condition in file processing using `async/await` and `Promise.all()`.
-* Conversion of callback hell into readable `async/await` code with centralized error handling.
-* Replacement of mixed Promise and callback code with a consistent `async/await` implementation.
-* Demonstration of the Node.js event loop using `setTimeout()`, `setInterval()`, `setImmediate()`, `fs.readFile()`, `process.nextTick()`, Promise microtasks, and stream close callbacks.
-* Utility functions for creating test files and logging execution by event loop phase.
+* Explanation of the execution order of synchronous code, microtasks (`process.nextTick()` and `Promise.then()`), and macrotasks
+* Prediction of the execution order for the provided asynchronous code snippets with explanations
+* Fix for the race condition in file processing using `async/await` and `Promise.all()`
+* Conversion of callback hell into readable `async/await` code with centralized error handling
+* Replacement of mixed Promise and callback code with a consistent `async/await` implementation
+* Demonstration of the Node.js event loop using `setTimeout()`, `setInterval()`, `setImmediate()`, `fs.readFile()`, `process.nextTick()`, Promise microtasks, and stream close callbacks
+* Utility functions for creating test files and logging execution by event loop phase
 
 
 2 - How to Run

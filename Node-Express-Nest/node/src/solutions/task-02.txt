@@ -6,15 +6,15 @@ I implemented a CSV stream transformation pipeline using Node.js streams.
 
 The implementation includes:
 
-* A custom `CSVParser` stream that reads CSV data and converts each row into a JavaScript object.
+* A custom `CSVParser` stream that reads CSV data and converts each row into a JavaScript object
 * A `DataTransformer` stream that normalizes and transforms each record:
-  * Capitalizes names and cities.
-  * Normalizes email addresses.
-  * Formats phone numbers.
-  * Standardizes dates to the `YYYY-MM-DD` format.
-* A `CSVWriter` stream that converts transformed objects back into CSV format.
-* A `processCSVFile()` function that connects all streams using `pipeline()` to process CSV files efficiently.
-* A `createSampleData()` function that creates the sample `data/users.csv` file for testing.
+  * Capitalizes names and cities
+  * Normalizes email addresses
+  * Formats phone numbers
+  * Standardizes dates to the `YYYY-MM-DD` format
+* A `CSVWriter` stream that converts transformed objects back into CSV format
+* A `processCSVFile()` function that connects all streams using `pipeline()` to process CSV files efficiently
+* A `createSampleData()` function that creates the sample `data/users.csv` file for testing
 
 The implementation processes the file using streams, allowing records to be transformed without loading the entire file into memory.
 
