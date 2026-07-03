@@ -1,7 +1,5 @@
 const { error, count } = require('console');
 const http = require('http');
-const { parse } = require('path/win32');
-const { title } = require('process');
 const url = require('url');
 
 function parseBody(req) {
@@ -60,11 +58,7 @@ function sendResponse(res, statusCode, data) {
 function validateTodo(todoData, isUpdate = false) {
     const errors = [];
 
-    if (
-        todoData === null ||
-        typeof todoData !== 'object' ||
-        Array.isArray(todoData)
-    ) {
+    if (todoData === null || typeof todoData !== 'object' || Array.isArray(todoData)) {
         return {
             isValid: false,
             errors: ['Request body must be a JSON object'],
@@ -143,12 +137,12 @@ class TodoServer {
     start() {
         const server = http.createServer((req, res) => this.handleRequest(req, res));
 
-        server.listen(this.port, () => {
-            console.log(`TodoServer is running on http://localhost:${this.port}`);
-        });
-
         server.on('error', (err) => {
             console.error('Server error:', err);
+        });
+
+        server.listen(this.port, () => {
+            console.log(`TodoServer is running on http://localhost:${this.port}`);
         });
     }
 

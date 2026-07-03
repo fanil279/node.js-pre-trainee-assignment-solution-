@@ -1,0 +1,103 @@
+Task 05 – Event-Driven ToDo Server
+
+1 - Description
+
+I extended the ToDo HTTP server from Task 04 by implementing an event-driven architecture using Node.js EventEmitter.
+
+The implementation includes:
+
+* TodoServer class extending the built-in EventEmitter class
+* Automatic event emission for all major application actions:
+
+  * todoCreated
+  * todoUpdated
+  * todoDeleted
+  * todoViewed
+  * todosListed
+  * todoNotFound
+  * validationError
+  * serverError
+* Event-driven ConsoleLogger that logs all application events with timestamps
+* AnalyticsTracker that automatically tracks:
+
+  * Total todos created
+  * Total todos updated
+  * Total todos deleted
+  * Total todo views
+  * Total errors
+  * Daily statistics for created, updated, deleted, and viewed todos
+* Event history storage that keeps the most recent 100 emitted events
+* Analytics endpoint (/analytics) for retrieving application statistics
+* Events endpoint (/events) for retrieving recent emitted events, with optional limiting using the last query parameter
+* Full REST API inherited from Task 04:
+
+  * Get all todos
+  * Get todo by ID
+  * Create todo
+  * Update todo
+  * Delete todo
+* Manual JSON parsing using streams
+* Input validation for request payloads
+* CORS support including OPTIONS requests
+* Error handling for invalid JSON, validation errors, missing resources, unsupported routes, and internal server errors
+
+
+2 - Event System
+
+The application follows an event-driven architecture where HTTP request handlers emit events instead of directly performing logging or analytics.
+
+Each emitted event is handled independently by registered listeners:
+
+* ConsoleLogger listens to events and writes formatted log messages to the console.
+* AnalyticsTracker listens to the same events and updates application statistics.
+* An internal listener stores the latest 100 events in memory for the /events endpoint.
+
+This design separates business logic from logging and analytics, making the server easier to extend and maintain.
+
+
+3 - Analytics and Logging
+
+Analytics are implemented through the AnalyticsTracker class.
+
+It maintains:
+
+* Total created todos
+* Total updated todos
+* Total deleted todos
+* Total viewed todos
+* Total validation and server errors
+* Daily statistics grouped by date
+
+Logging is implemented through the ConsoleLogger class.
+
+Each event generates a descriptive console message including:
+
+* Timestamp
+* Operation performed
+* Todo ID
+* Todo title (where applicable)
+* Validation or server error information
+
+
+4 - How to Run
+
+1. Make sure Node.js is installed.
+2. Clone the repository.
+3. Install dependencies with npm install.
+4. Open a terminal in the project directory at:
+   
+   Node-Express-Nest\node\src\solutions
+
+5. Run the implementation with:
+
+   node task-05.js
+
+6. Run the test suite with:
+
+   node task-05-test.js
+
+5 - Implementation File
+
+The implementation is provided in:
+
+task-05.js
