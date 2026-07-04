@@ -1,6 +1,7 @@
 const { Router } = require('express');
 
 const { logger } = require('./task-01');
+const { metricsLogger, metrics } = require('./task-05');
 const TodoService = require('../../node/src/solutions/todoService');
 
 const routerTodos = Router();
@@ -19,6 +20,7 @@ function validateTodo(req, res, next) {
 }
 
 routerTodos.use(logger);
+routerTodos.use(metricsLogger);
 
 routerTodos.get('/', (req, res, next) => {
     try {
@@ -32,6 +34,13 @@ routerTodos.get('/', (req, res, next) => {
         error.status ??= 400;
         next(error);
     }
+});
+
+routerTodos.get('/metrics', (_req, res) => {
+    res.status(200).json({
+        success: true,
+        data: metrics,
+    });
 });
 
 routerTodos.get('/:id', (req, res, next) => {
