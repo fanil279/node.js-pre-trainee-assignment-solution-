@@ -1,0 +1,11 @@
+const errorHandler = (err, _req, res, _next) => {
+    const status = err.status || 500;
+
+    res.status(status).json({
+        status: status,
+        message: err.message,
+        timestamp: new Date().toISOString(),
+    });
+};
+
+module.exports = errorHandler;
