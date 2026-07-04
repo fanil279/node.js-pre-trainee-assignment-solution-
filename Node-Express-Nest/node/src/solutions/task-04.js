@@ -1,6 +1,7 @@
-const { error, count } = require('console');
 const http = require('http');
 const url = require('url');
+
+const TodoService = require('./todoService');
 
 function parseBody(req) {
     return new Promise((resolve, reject) => {
@@ -96,42 +97,9 @@ function validateTodo(todoData, isUpdate = false) {
 class TodoServer {
     constructor(port = 3000) {
         this.port = port;
-        this.todos = [];
-        this.nextId = 1;
+        this.todoService = new TodoService();
 
-        this.initializeSampleData();
-    }
-
-    initializeSampleData() {
-        const sampleTodos = [
-            {
-                id: this.generateNextId(),
-                title: 'Sample Todo 1',
-                description: 'This is a sample todo item.',
-                completed: false,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-            },
-
-            {
-                id: this.generateNextId(),
-                title: 'Sample Todo 2',
-                description: 'This is another sample todo item.',
-                completed: true,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-            },
-
-            {
-                id: this.generateNextId(),
-                title: 'Sample Todo 3',
-                completed: false,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-            },
-        ];
-
-        this.todos = sampleTodos;
+        this.todoService.initializeSampleData();
     }
 
     start() {
@@ -177,12 +145,10 @@ class TodoServer {
                 await this.deleteTodo(req, res, params);
                 return;
             } else {
-                sendResponse(res, 404, {
+                return sendResponse(res, 404, {
                     success: false,
                     error: 'Route not found',
                 });
-
-                return;
             }
         } catch (error) {
             console.error('Request handling error:', error);
@@ -206,24 +172,7 @@ class TodoServer {
     }
 
     async getAllTodos(req, res, query) {
-        let todos = this.todos;
-
-        if (query.completed !== undefined) {
-            const completedFilter = query.completed.toLowerCase();
-
-            if (completedFilter === 'true') {
-                todos = todos.filter((todo) => todo.completed);
-            } else if (completedFilter === 'false') {
-                todos = todos.filter((todo) => !todo.completed);
-            } else {
-                sendResponse(res, 400, {
-                    success: false,
-                    error: 'Invalid completed query parameter. Use true or false.',
-                });
-
-                return;
-            }
-        }
+        const todos = this.todoService.getAll();
 
         sendResponse(res, 200, {
             success: true,
@@ -234,15 +183,14 @@ class TodoServer {
 
     async getTodoById(req, res, params) {
         const { id } = params;
-        const todo = this.findTodoById(id);
+
+        const todo = this.todoService.getById(id);
 
         if (!todo) {
-            sendResponse(res, 404, {
+            return sendResponse(res, 404, {
                 success: false,
                 error: 'Todo not found',
             });
-
-            return;
         }
 
         sendResponse(res, 200, {
@@ -253,27 +201,17 @@ class TodoServer {
 
     async createTodo(req, res) {
         const body = await parseBody(req);
+
         const { isValid, errors } = validateTodo(body);
 
         if (!isValid) {
-            sendResponse(res, 400, {
+            return sendResponse(res, 400, {
                 success: false,
                 errors: errors,
             });
-
-            return;
         }
 
-        const todo = {
-            id: this.generateNextId(),
-            title: body.title,
-            description: body.description,
-            completed: body.completed ?? false,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-        };
-
-        this.todos.push(todo);
+        const todo = this.todoService.create(body);
 
         sendResponse(res, 201, {
             success: true,
@@ -283,22 +221,13 @@ class TodoServer {
 
     async updateTodo(req, res, params) {
         const { id } = params;
-        const todo = this.findTodoById(id);
-
-        if (!todo) {
-            sendResponse(res, 404, {
-                success: false,
-                error: 'Todo does not exist',
-            });
-
-            return;
-        }
 
         const body = await parseBody(req);
+
         const { isValid, errors } = validateTodo(body, true);
 
         if (!isValid) {
-            sendResponse(res, 400, {
+            return sendResponse(res, 400, {
                 success: false,
                 errors: errors,
             });
@@ -306,19 +235,14 @@ class TodoServer {
             return;
         }
 
-        if ('title' in body) {
-            todo.title = body.title;
-        }
+        const todo = this.todoService.update(id, body);
 
-        if ('description' in body) {
-            todo.description = body.description;
+        if (!todo) {
+            return sendResponse(res, 404, {
+                success: false,
+                error: 'Todo does not exist',
+            });
         }
-
-        if ('completed' in body) {
-            todo.completed = body.completed;
-        }
-
-        todo.updatedAt = new Date().toISOString();
 
         sendResponse(res, 200, {
             success: true,
@@ -328,22 +252,19 @@ class TodoServer {
 
     async deleteTodo(req, res, params) {
         const { id } = params;
-        const todoIndex = this.findTodoIndexById(id);
 
-        if (todoIndex === -1) {
-            sendResponse(res, 404, {
+        const deleted = this.todoService.delete(id);
+
+        if (!deleted) {
+            return sendResponse(res, 404, {
                 success: false,
-                error: 'Todo index is not found',
+                error: 'Todo not found',
             });
-
-            return;
         }
-
-        this.todos.splice(todoIndex, 1);
 
         sendResponse(res, 200, {
             success: true,
-            message: 'Todo deleted successfuly',
+            message: 'Todo deleted successfully',
         });
     }
 
@@ -355,30 +276,6 @@ class TodoServer {
         });
 
         res.end();
-    }
-
-    findTodoById(id) {
-        const numId = parseInt(id, 10);
-
-        if (!Number.isInteger(numId)) return null;
-
-        return this.todos.find((todo) => todo.id === numId) || null;
-    }
-
-    findTodoIndexById(id) {
-        const numId = parseInt(id, 10);
-
-        if (!Number.isInteger(numId)) return -1;
-
-        return this.todos.findIndex((todo) => todo.id === numId);
-    }
-
-    generateNextId() {
-        if (!Number.isSafeInteger(this.nextId)) {
-            throw new Error('Next ID exceeds safe integer limit');
-        }
-
-        return this.nextId++;
     }
 }
 
