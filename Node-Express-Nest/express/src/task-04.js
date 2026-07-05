@@ -19,8 +19,8 @@ function validateTodo(req, res, next) {
     next();
 }
 
-routerTodos.use(logger);
 routerTodos.use(metricsLogger);
+routerTodos.use(logger);
 
 routerTodos.get('/', (req, res, next) => {
     try {
