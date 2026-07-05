@@ -16,12 +16,9 @@ export class MathController {
     ) {}
 
     @Get('add')
-    add(@Query('num1') num1: string, @Query('num2') num2: string): object {
+    add(@Query('num1') num1: number, @Query('num2') num2: number): object {
         this.logger.log('Request reached "math/add" controller');
 
-        const n1 = Number(num1);
-        const n2 = Number(num2);
-
-        return this.mathService.add(n1, n2);
+        return this.mathService.add(num1, num2);
     }
 }
