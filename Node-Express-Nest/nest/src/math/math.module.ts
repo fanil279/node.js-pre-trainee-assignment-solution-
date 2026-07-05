@@ -7,6 +7,5 @@ import { LoggerModule } from '../logger/logger.module';
     imports: [LoggerModule],
     providers: [MathService],
     controllers: [MathController],
-    exports: [],
 })
 export class MathModule {}
