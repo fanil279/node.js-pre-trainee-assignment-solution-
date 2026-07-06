@@ -1,4 +1,14 @@
-import { Controller, ParseIntPipe, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import {
+    Controller,
+    ParseIntPipe,
+    Get,
+    Post,
+    Put,
+    Delete,
+    HttpCode,
+    Param,
+    Body,
+} from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { TodoDto } from './dto/todo.dto';
 import { CreateTodoDto } from './dto/create-todo.dto';
@@ -29,6 +39,7 @@ export class TodoController {
     }
 
     @Delete(':id')
+    @HttpCode(204)
     delete(@Param('id', ParseIntPipe) id: number): void {
         this.todoService.delete(id);
     }
