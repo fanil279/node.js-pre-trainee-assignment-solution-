@@ -53,7 +53,7 @@ export class TodoService {
         return TodoService.toDto(saved);
     }
 
-    async update(id: number, dto: UpdateTodoDto): Promise<TodoDto> {
+    async update(dto: UpdateTodoDto, id: number): Promise<TodoDto> {
         const entity = await this.findEntityById(id);
 
         this.repository.merge(entity, dto);

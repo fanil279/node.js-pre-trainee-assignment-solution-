@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, ParseIntPipe, Get, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 import { LoggerService } from '../logger/logger.service';
 
@@ -9,12 +9,10 @@ export class UserController {
         private readonly logger: LoggerService,
     ) {}
 
-    @Get('users/:id')
-    findAll(@Param('id') id: string): { id: number; name: string } {
+    @Get(':id')
+    findAll(@Param('id', ParseIntPipe) id: number): { id: number; name: string } {
         this.logger.log('Request reached "user/users" controller');
 
-        const idNum = Number(id);
-
-        return this.userService.findUser(idNum);
+        return this.userService.findUser(id);
     }
 }
