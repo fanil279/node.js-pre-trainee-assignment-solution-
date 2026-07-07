@@ -39,7 +39,7 @@ ORDER BY created_at DESC;
 
 SELECT *
 FROM todos
-WHERE title LIKE '%bread%'
+WHERE title LIKE '%meeting%'
    OR description LIKE '%store%';
 
 

@@ -4,10 +4,9 @@ Task 02 – Basic CRUD Operations on the "todos" Table with Raw SQL
 Description
 -----------
 
-I connected to the existing `todo_app` database using MySQL Workbench and performed
-the four basic CRUD operations on the `todos` table using raw SQL. Since the `todos`
-table has a foreign key referencing the `users` table, I first inserted a user record
-before creating a todo associated with that user.
+I connected to the existing todo_app database using MySQL Workbench and performed the four
+basic CRUD operations on the todos table using raw SQL. I inserted a new todo, retrieved all todos,
+updated the status of a specific todo, and then deleted it.
 
 Terminal Commands
 -----------------
@@ -21,20 +20,11 @@ SQL Queries
 
 USE todo_app;
 
--- User is inserted because todos.user_id is a foreign key referencing users.id
-INSERT INTO users (username, email, password_hash)
-VALUES (
-    'luis',
-    'luis@example.com',
-    'hashed_password'
-);
-
-INSERT INTO todos (title, description, status, user_id)
+INSERT INTO todos (title, description, status)
 VALUES (
     'Buy bread',
     'In the nearest store',
-    'active',
-    1
+    'active'
 );
 
 SELECT * FROM todos;
@@ -51,8 +41,5 @@ WHERE id = 1;
 Issues Encountered
 ------------------
 
-During the implementation, I initially tried to insert a todo before creating a
-corresponding user. Since the todos.user_id column is a foreign key referencing
-users.id, MySQL rejected the insert due to the foreign key constraint. After inserting
-a user first, I was able to create the todo successfully.
+No issues were encountered during the setup.
 */
