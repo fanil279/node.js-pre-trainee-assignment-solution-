@@ -27,7 +27,6 @@ CREATE TABLE todos (
     description VARCHAR(200),
     status ENUM('active', 'completed') DEFAULT 'active',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
     
     CONSTRAINT chk_title_not_empty
         CHECK (TRIM(title) <> '')
