@@ -31,8 +31,6 @@ WHERE status = 'active';
 
 
 /*
-
-
 Issues Encountered
 ------------------
 
