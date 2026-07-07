@@ -4,7 +4,7 @@ Task 07 – Connecting the Todo Project to a Database Using TypeORM
 Commit Hash
 -----------
 
-- 
+- a326b00
 
 Description
 -----------
