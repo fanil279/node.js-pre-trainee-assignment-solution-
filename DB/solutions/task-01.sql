@@ -3,7 +3,6 @@
 Description
 -----------
 
-
 I already had MySQL Server and MySQL Workbench installed, so no installation was required.
 I connected to my local MySQL server using MySQL Workbench, created a new database named `todo_app`,
 selected it as the active database, and created the `users` and `todos` tables using raw SQL.
