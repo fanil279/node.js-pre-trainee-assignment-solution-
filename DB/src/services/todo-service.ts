@@ -79,7 +79,7 @@ export class TodoService {
             },
         });
 
-        await redis.set(key, JSON.stringify(todos), 'EX', 300);
+        await redis.set(key, JSON.stringify(todos), 'EX', 5); // for demonstration purposes 5s otherwise would be 5m
 
         return todos;
     }

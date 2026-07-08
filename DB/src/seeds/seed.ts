@@ -53,6 +53,13 @@ async function seed(): Promise<void> {
 
         const userRepository = AppDataSource.getRepository(UserEntity);
 
+        const count = await userRepository.count();
+
+        if (count > 0) {
+            console.info('Database is already seeded');
+            return;
+        }
+
         for (const userData of seedData) {
             const user = userRepository.create({
                 name: userData.name,
@@ -63,7 +70,7 @@ async function seed(): Promise<void> {
             await userRepository.save(user);
         }
 
-        console.info('Database seeded successfully');
+        console.info('Database has been seeded successfully');
     } catch (error) {
         console.error(error);
     } finally {

@@ -23,7 +23,9 @@ async function test() {
         const cachedTodos = await todoService.findAllByUserId(1); // Cache hit
         console.log(cachedTodos);
 
-        // After 5 minutes cache will expire
+        await new Promise((resolve) => setTimeout(resolve, 6000));
+
+        await todoService.findAllByUserId(1); // Cache miss (expired)
     } catch (error) {
         await redis.quit();
     } finally {
