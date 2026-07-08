@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { join } from 'path';
 import { DataSource } from 'typeorm';
 import { UserEntity } from './entities/User';
 import { TodoEntity } from './entities/Todo';
@@ -12,5 +13,5 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME!,
 
     entities: [UserEntity, TodoEntity],
-    migrations: ['src/migrations/*.ts'],
+    migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
 });

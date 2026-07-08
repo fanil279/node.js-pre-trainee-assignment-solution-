@@ -15,6 +15,6 @@ export class UserEntity {
     @CreateDateColumn()
     createdAt!: Date;
 
-    @OneToMany(() => TodoEntity, (todo) => todo.user, { cascade: true })
+    @OneToMany(() => TodoEntity, (todo) => todo.user, { cascade: ['insert'] })
     todos!: TodoEntity[];
 }

@@ -30,7 +30,7 @@ export class TodoEntity {
     @CreateDateColumn()
     createdAt!: Date;
 
-    @ManyToOne(() => UserEntity, (user) => user.todos)
+    @ManyToOne(() => UserEntity, (user) => user.todos, { eager: true })
     @JoinColumn({ name: 'user_id' })
     user!: UserEntity;
 }
