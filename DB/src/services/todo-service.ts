@@ -28,6 +28,8 @@ export class TodoService {
             });
 
             await this.todoRepository.save(todo);
+
+            await redis.del('todos');
             await redis.del(`todos:user:${user.id}`);
         } catch (error) {
             console.error(error);
@@ -95,6 +97,8 @@ export class TodoService {
             this.todoRepository.merge(todo, data);
 
             await this.todoRepository.save(todo);
+
+            await redis.del('todos');
             await redis.del(`todos:user:${todo.user.id}`);
         } catch (error) {
             console.error(error);
@@ -111,6 +115,8 @@ export class TodoService {
             }
 
             await this.todoRepository.remove(todo);
+
+            await redis.del('todos');
             await redis.del(`todos:user:${todo.user.id}`);
         } catch (error) {
             console.error(error);
