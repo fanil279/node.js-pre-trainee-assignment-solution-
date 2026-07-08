@@ -42,12 +42,15 @@ export class TodoService {
             const cached = await redis.get(key);
 
             if (cached) {
+                console.log('Cache hit');
                 return JSON.parse(cached);
             }
 
+            console.log('Cache miss');
+
             const todos = await this.todoRepository.find();
 
-            await redis.set(key, JSON.stringify(todos), 'EX', 300)
+            await redis.set(key, JSON.stringify(todos), 'EX', 300);
 
             return todos;
         } catch (error) {
