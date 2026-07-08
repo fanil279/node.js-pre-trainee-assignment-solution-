@@ -1,3 +1,4 @@
+import { redis } from '../clients/redis';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../entities/User';
 import { TodoEntity } from '../entities/Todo';
@@ -27,6 +28,7 @@ export class TodoService {
             });
 
             await this.todoRepository.save(todo);
+            await redis.del(`todos:user:${user.id}`);
         } catch (error) {
             console.error(error);
             throw error;
@@ -35,13 +37,48 @@ export class TodoService {
 
     async findAll(): Promise<TodoEntity[]> {
         try {
+            const key = 'todos';
+
+            const cached = await redis.get(key);
+
+            if (cached) {
+                return JSON.parse(cached);
+            }
+
             const todos = await this.todoRepository.find();
+
+            await redis.set(key, JSON.stringify(todos), 'EX', 300)
 
             return todos;
         } catch (error) {
             console.error(error);
             throw error;
         }
+    }
+
+    async findAllByUserId(id: number): Promise<TodoEntity[]> {
+        const key = `todos:user:${id}`;
+
+        const cached = await redis.get(key);
+
+        if (cached) {
+            console.log('Cache hit');
+            return JSON.parse(cached);
+        }
+
+        console.log('Cache miss');
+
+        const todos = await this.todoRepository.find({
+            where: {
+                user: {
+                    id: id,
+                },
+            },
+        });
+
+        await redis.set(key, JSON.stringify(todos), 'EX', 300);
+
+        return todos;
     }
 
     async update(id: number, data: UpdateTodo) {
@@ -55,6 +92,7 @@ export class TodoService {
             this.todoRepository.merge(todo, data);
 
             await this.todoRepository.save(todo);
+            await redis.del(`todos:user:${todo.user.id}`);
         } catch (error) {
             console.error(error);
             throw error;
@@ -63,11 +101,14 @@ export class TodoService {
 
     async delete(id: number) {
         try {
-            const deletedTodo = await this.todoRepository.delete(id);
+            const todo = await this.todoRepository.findOneBy({ id });
 
-            if (deletedTodo.affected === 0) {
-                throw new Error(`Todo with id: ${id} does not exist`);
+            if (!todo) {
+                throw new Error('Todo not found');
             }
+
+            await this.todoRepository.remove(todo);
+            await redis.del(`todos:user:${todo.user.id}`);
         } catch (error) {
             console.error(error);
             throw error;
