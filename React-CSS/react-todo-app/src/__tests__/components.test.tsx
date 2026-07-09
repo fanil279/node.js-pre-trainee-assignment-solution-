@@ -37,14 +37,14 @@ test('CompleteToDoList renders with input and add button', () => {
   expect(screen.getByText(/add/i)).toBeInTheDocument();
 });
 
-// // 5. FilteredToDoList
-// test('FilteredToDoList renders and has filter buttons', () => {
-//   render(<FilteredToDoList />);
-//   expect(screen.getByPlaceholderText(/add todo/i)).toBeInTheDocument();
-//   expect(screen.getByText(/all/i)).toBeInTheDocument();
-//   expect(screen.getByText(/active/i)).toBeInTheDocument();
-//   expect(screen.getByText(/completed/i)).toBeInTheDocument();
-// });
+// 5. FilteredToDoList
+test('FilteredToDoList renders and has filter buttons', () => {
+  render(<FilteredToDoList />);
+  expect(screen.getByPlaceholderText(/add todo/i)).toBeInTheDocument();
+  expect(screen.getByText(/all/i)).toBeInTheDocument();
+  expect(screen.getByText(/active/i)).toBeInTheDocument();
+  expect(screen.getByText(/completed/i)).toBeInTheDocument();
+});
 
 // // 6. ActiveCount
 // test('ActiveCount shows number of active todos', () => {
