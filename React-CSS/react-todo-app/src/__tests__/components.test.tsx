@@ -62,11 +62,11 @@ test('StyledToDoItem renders todo item', () => {
   expect(screen.getByText(/completed/i)).toBeInTheDocument();
 });
 
-// // 8. FetchToDos
-// test('FetchToDos renders with loading state', () => {
-//   render(<FetchToDos />);
-//   expect(screen.getByText(/loading/i)).toBeInTheDocument();
-// });
+// 8. FetchToDos
+test('FetchToDos renders with loading state', () => {
+  render(<FetchToDos />);
+  expect(screen.getByText(/loading/i)).toBeInTheDocument();
+});
 
 // // 9. Card
 // test('Card renders children', () => {
