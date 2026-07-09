@@ -2,11 +2,6 @@ import React, { useState } from 'react';
 import { Todo } from '../../types';
 
 export const FilteredToDoList: React.FC = () => {
-  // 1. Display a list of todos with add functionality
-  // 2. Add filter buttons: "All", "Active", "Completed"
-  // 3. Filter todos based on selected filter
-  // 4. Use derived state for filtered results
-  // 5. Add complete functionality for todos
   const [todos, setTodos] = useState<Todo[]>([]);
   const [inputValue, setInputValue] = useState('');
 
@@ -62,9 +57,11 @@ export const FilteredToDoList: React.FC = () => {
         <button type='submit'>Add</button>
       </form>
 
-      <button onClick={() => handleFilter(filter)}>All</button>
-      <button onClick={() => handleFilter(filter)}>Active</button>
-      <button onClick={() => handleFilter(filter)}>Completed</button>
+      <div style={{marginTop: '1rem'}}>
+        <button onClick={() => handleFilter('all')}>All</button>
+        <button onClick={() => handleFilter('active')}>Active</button>
+        <button onClick={() => handleFilter('completed')}>Completed</button>
+      </div>
 
       <ul>
         {filteredTodos.map((todo) => (
