@@ -82,9 +82,9 @@ test('Card renders children', () => {
     expect(screen.getByText('Content')).toBeInTheDocument();
 });
 
-// // 10. AddToDoForm
-// test('AddToDoForm renders with form elements', () => {
-//   render(<AddToDoForm />);
-//   expect(screen.getByPlaceholderText(/add todo/i)).toBeInTheDocument();
-//   expect(screen.getByText(/submit/i)).toBeInTheDocument();
-// });
+// 10. AddToDoForm
+test('AddToDoForm renders with form elements', () => {
+    render(<AddToDoForm />);
+    expect(screen.getByPlaceholderText(/add todo/i)).toBeInTheDocument();
+    expect(screen.getByText(/submit/i)).toBeInTheDocument();
+});
