@@ -68,11 +68,11 @@ test('FetchToDos renders with loading state', () => {
   expect(screen.getByText(/loading/i)).toBeInTheDocument();
 });
 
-// // 9. Card
-// test('Card renders children', () => {
-//   render(<Card><span>Content</span></Card>);
-//   expect(screen.getByText('Content')).toBeInTheDocument();
-// });
+// 9. Card
+test('Card renders children', () => {
+  render(<Card><span>Content</span></Card>);
+  expect(screen.getByText('Content')).toBeInTheDocument();
+});
 
 // // 10. AddToDoForm
 // test('AddToDoForm renders with form elements', () => {
