@@ -3,7 +3,7 @@ import { Todo } from '../../types';
 
 export const AddToDo: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
-  const [_todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,6 +31,16 @@ export const AddToDo: React.FC = () => {
         />
         <button type='submit'>Add</button>
       </form>
+    
+      <div>
+        <ul>
+          {todos.map((todo) => (
+            <li key={todo.id}>
+              {todo.title} - {todo.completed ? "completed" : "not completed"}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
