@@ -12,66 +12,74 @@ import { AddToDoForm } from '../solutions/task-10/AddToDoForm';
 
 // 1. ToDoList
 test('ToDoList renders todo titles', () => {
-  render(<ToDoList todos={[{ id: 1, title: 'Test', completed: false }]} />);
-  expect(screen.getByText('Test - not completed')).toBeInTheDocument();
+    render(<ToDoList todos={[{ id: 1, title: 'Test', completed: false }]} />);
+    expect(screen.getByText('Test - not completed')).toBeInTheDocument();
 });
 
 // 2. ToDoItem
 test('ToDoItem shows title and completed status', () => {
-  render(<ToDoItem todo={{ id: 1, title: 'Test', completed: true }} />);
-  expect(screen.getByText('Test')).toBeInTheDocument();
-  expect(screen.getByText(/completed/i)).toBeInTheDocument();
+    render(<ToDoItem todo={{ id: 1, title: 'Test', completed: true }} />);
+    expect(screen.getByText('Test')).toBeInTheDocument();
+    expect(screen.getByText(/completed/i)).toBeInTheDocument();
 });
 
 // 3. AddToDo
 test('AddToDo renders with input and add button', () => {
-  render(<AddToDo />);
-  expect(screen.getByPlaceholderText(/add todo/i)).toBeInTheDocument();
-  expect(screen.getByText(/add/i)).toBeInTheDocument();
+    render(<AddToDo />);
+    expect(screen.getByPlaceholderText(/add todo/i)).toBeInTheDocument();
+    expect(screen.getByText(/add/i)).toBeInTheDocument();
 });
 
 // 4. CompleteToDoList
 test('CompleteToDoList renders with input and add button', () => {
-  render(<CompleteToDoList />);
-  expect(screen.getByPlaceholderText(/add todo/i)).toBeInTheDocument();
-  expect(screen.getByText(/add/i)).toBeInTheDocument();
+    render(<CompleteToDoList />);
+    expect(screen.getByPlaceholderText(/add todo/i)).toBeInTheDocument();
+    expect(screen.getByText(/add/i)).toBeInTheDocument();
 });
 
 // 5. FilteredToDoList
 test('FilteredToDoList renders and has filter buttons', () => {
-  render(<FilteredToDoList />);
-  expect(screen.getByPlaceholderText(/add todo/i)).toBeInTheDocument();
-  expect(screen.getByText(/all/i)).toBeInTheDocument();
-  expect(screen.getByText(/active/i)).toBeInTheDocument();
-  expect(screen.getByText(/completed/i)).toBeInTheDocument();
+    render(<FilteredToDoList />);
+    expect(screen.getByPlaceholderText(/add todo/i)).toBeInTheDocument();
+    expect(screen.getByText(/all/i)).toBeInTheDocument();
+    expect(screen.getByText(/active/i)).toBeInTheDocument();
+    expect(screen.getByText(/completed/i)).toBeInTheDocument();
 });
 
 // 6. ActiveCount
 test('ActiveCount shows number of active todos', () => {
-  render(<ActiveCount todos={[
-    { id: 1, title: 'A', completed: false },
-    { id: 2, title: 'B', completed: true }
-  ]} />);
-  expect(screen.getByText(/1 active/i)).toBeInTheDocument();
+    render(
+        <ActiveCount
+            todos={[
+                { id: 1, title: 'A', completed: false },
+                { id: 2, title: 'B', completed: true },
+            ]}
+        />,
+    );
+    expect(screen.getByText(/1 active/i)).toBeInTheDocument();
 });
 
 // 7. StyledToDoItem
 test('StyledToDoItem renders todo item', () => {
-  render(<StyledToDoItem todo={{ id: 1, title: 'Test', completed: true }} />);
-  expect(screen.getByText('Test')).toBeInTheDocument();
-  expect(screen.getByText(/completed/i)).toBeInTheDocument();
+    render(<StyledToDoItem todo={{ id: 1, title: 'Test', completed: true }} />);
+    expect(screen.getByText('Test')).toBeInTheDocument();
+    expect(screen.getByText(/completed/i)).toBeInTheDocument();
 });
 
 // 8. FetchToDos
 test('FetchToDos renders with loading state', () => {
-  render(<FetchToDos />);
-  expect(screen.getByText(/loading/i)).toBeInTheDocument();
+    render(<FetchToDos />);
+    expect(screen.getByText(/loading/i)).toBeInTheDocument();
 });
 
 // 9. Card
 test('Card renders children', () => {
-  render(<Card><span>Content</span></Card>);
-  expect(screen.getByText('Content')).toBeInTheDocument();
+    render(
+        <Card>
+            <span>Content</span>
+        </Card>,
+    );
+    expect(screen.getByText('Content')).toBeInTheDocument();
 });
 
 // // 10. AddToDoForm
@@ -79,4 +87,4 @@ test('Card renders children', () => {
 //   render(<AddToDoForm />);
 //   expect(screen.getByPlaceholderText(/add todo/i)).toBeInTheDocument();
 //   expect(screen.getByText(/submit/i)).toBeInTheDocument();
-// }); 
+// });

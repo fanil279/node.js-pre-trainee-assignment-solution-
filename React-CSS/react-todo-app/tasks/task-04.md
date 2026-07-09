@@ -1,5 +1,5 @@
 ---
-topic: "Event Handling"
+topic: 'Event Handling'
 taskNumber: 4
 ---
 
@@ -9,6 +9,7 @@ taskNumber: 4
 Add a button to each ToDo item in the list. Clicking the button should mark the todo as completed (use state and event handling). The component should allow adding todos and marking them as completed.
 
 **Requirements:**
+
 - Use `useState` to manage todos state
 - Include input field with placeholder "Add todo"
 - Include "Add" button to add new todos
@@ -19,11 +20,13 @@ Add a button to each ToDo item in the list. Clicking the button should mark the 
 - Handle both adding and completing todos
 
 **Example:**
+
 ```jsx
 // User clicks "Complete" on "Buy milk", item visually changes to completed
 ```
 
 **Theoretical Questions:**
+
 1. How do you handle events in React functional components?
 2. What is the difference between onClick and onChange events?
-3. How do you update specific items in an array state in React? 
+3. How do you update specific items in an array state in React?

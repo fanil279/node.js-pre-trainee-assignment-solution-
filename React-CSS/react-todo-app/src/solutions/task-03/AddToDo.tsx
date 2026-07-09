@@ -2,45 +2,45 @@ import React, { useState } from 'react';
 import { Todo } from '../../types';
 
 export const AddToDo: React.FC = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [todos, setTodos] = useState<Todo[]>([]);
+    const [inputValue, setInputValue] = useState('');
+    const [todos, setTodos] = useState<Todo[]>([]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-    if (inputValue.trim() === '') return;
+        if (inputValue.trim() === '') return;
 
-    const newTodo: Todo = {
-      id: 1,
-      title: inputValue,
-      completed: false,
+        const newTodo: Todo = {
+            id: 1,
+            title: inputValue,
+            completed: false,
+        };
+
+        setTodos((prev) => [...prev, newTodo]);
+        setInputValue('');
     };
 
-    setTodos((prev) => [...prev, newTodo]);
-    setInputValue('');
-  };
+    return (
+        <div>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    placeholder="Add Todo"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                />
+                <button type="submit">Add</button>
+            </form>
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          placeholder='Add Todo'
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
-        <button type='submit'>Add</button>
-      </form>
-    
-      <div>
-        <ul>
-          {todos.map((todo) => (
-            <li key={todo.id}>
-              {todo.title} - {todo.completed ? 'completed' : 'not completed'}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
+            <div>
+                <ul>
+                    {todos.map((todo) => (
+                        <li key={todo.id}>
+                            {todo.title} - {todo.completed ? 'completed' : 'not completed'}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    );
 };
