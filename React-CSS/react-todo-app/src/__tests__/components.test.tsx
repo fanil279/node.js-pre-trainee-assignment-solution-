@@ -30,12 +30,12 @@ test('AddToDo renders with input and add button', () => {
   expect(screen.getByText(/add/i)).toBeInTheDocument();
 });
 
-// // 4. CompleteToDoList
-// test('CompleteToDoList renders with input and add button', () => {
-//   render(<CompleteToDoList />);
-//   expect(screen.getByPlaceholderText(/add todo/i)).toBeInTheDocument();
-//   expect(screen.getByText(/add/i)).toBeInTheDocument();
-// });
+// 4. CompleteToDoList
+test('CompleteToDoList renders with input and add button', () => {
+  render(<CompleteToDoList />);
+  expect(screen.getByPlaceholderText(/add todo/i)).toBeInTheDocument();
+  expect(screen.getByText(/add/i)).toBeInTheDocument();
+});
 
 // // 5. FilteredToDoList
 // test('FilteredToDoList renders and has filter buttons', () => {
