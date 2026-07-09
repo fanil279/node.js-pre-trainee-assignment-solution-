@@ -4,8 +4,6 @@ import { TodoListProps } from '../../types';
 export const ToDoList: React.FC<TodoListProps> = ({ todos }) => {
   return (
     <div>
-      <h3>Todo List</h3>
-
       <ul>
         {todos.length === 0 ? (
           <li>No todos available.</li>
