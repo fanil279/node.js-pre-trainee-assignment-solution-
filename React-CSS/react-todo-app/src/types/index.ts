@@ -1,17 +1,17 @@
 export interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
+    id: number;
+    title: string;
+    completed: boolean;
 }
 
 export interface TodoListProps {
-  todos: Todo[];
+    todos: Todo[];
 }
 
 export interface TodoItemProps {
-  todo: Todo;
+    todo: Todo;
 }
 
 export interface ActiveCountProps {
-  todos: Todo[];
-} 
+    todos: Todo[];
+}

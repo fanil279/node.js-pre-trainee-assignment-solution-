@@ -60,27 +60,33 @@ react-todo-app/
 ## Installation and Setup
 
 ### Prerequisites
+
 - Node.js (version 14 or higher)
 - npm or yarn
 
 ### Install Dependencies
+
 ```bash
 cd react-todo-app
 npm install
 ```
 
 ### Start the Application
+
 ```bash
 npm start
 ```
+
 The application will be available at: http://localhost:3000
 
 ### Run Tests
+
 ```bash
 npm test
 ```
 
 ### Build for Production
+
 ```bash
 npm run build
 ```
@@ -91,7 +97,7 @@ The application contains a navigation menu that allows switching between differe
 
 - **Home** - main page with project description
 - **Task 1** - ToDoList Component
-- **Task 2** - ToDoItem Component  
+- **Task 2** - ToDoItem Component
 - **Task 3** - Add ToDo with useState
 - **Task 4** - Complete ToDo List
 - **Task 5** - Filtered ToDo List
@@ -163,9 +169,9 @@ Main types are defined in `src/types/index.ts`:
 
 ```typescript
 export interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
+    id: number;
+    title: string;
+    completed: boolean;
 }
 ```
 
@@ -191,16 +197,20 @@ npx tsc --noEmit
 ## Troubleshooting
 
 ### TypeScript Errors
+
 If TypeScript errors occur, make sure:
+
 - All dependencies are installed: `npm install`
 - React types are installed: `npm install @types/react @types/react-dom`
 
 ### Test Errors
+
 - Check that all imports are correct
 - Ensure components are exported properly
 - Verify implementation matches task requirements
 
 ### Routing Issues
+
 - Make sure BrowserRouter wraps the application
 - Check route paths in Routes
 
@@ -209,4 +219,4 @@ If TypeScript errors occur, make sure:
 - [React Documentation](https://react.dev/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
-- [React Router](https://reactrouter.com/) 
+- [React Router](https://reactrouter.com/)
