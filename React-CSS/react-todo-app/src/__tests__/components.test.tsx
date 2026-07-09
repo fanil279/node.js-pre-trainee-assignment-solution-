@@ -46,14 +46,14 @@ test('FilteredToDoList renders and has filter buttons', () => {
   expect(screen.getByText(/completed/i)).toBeInTheDocument();
 });
 
-// // 6. ActiveCount
-// test('ActiveCount shows number of active todos', () => {
-//   render(<ActiveCount todos={[
-//     { id: 1, title: 'A', completed: false },
-//     { id: 2, title: 'B', completed: true }
-//   ]} />);
-//   expect(screen.getByText(/1 active/i)).toBeInTheDocument();
-// });
+// 6. ActiveCount
+test('ActiveCount shows number of active todos', () => {
+  render(<ActiveCount todos={[
+    { id: 1, title: 'A', completed: false },
+    { id: 2, title: 'B', completed: true }
+  ]} />);
+  expect(screen.getByText(/1 active/i)).toBeInTheDocument();
+});
 
 // // 7. StyledToDoItem
 // test('StyledToDoItem renders todo item', () => {
