@@ -12,7 +12,7 @@ export const ActiveCount: React.FC<ActiveCountProps> = ({ todos }) => {
     <div>
       {activeCount > 0 ? (
         <h1>
-          {`${activeCount} active ${activeCount === 1 ? "todo" : "todos"}`}
+          {`${activeCount} active ${activeCount === 1 ? 'todo' : 'todos'}`}
         </h1>
       ) : (
         <h1>All todos completed!</h1>

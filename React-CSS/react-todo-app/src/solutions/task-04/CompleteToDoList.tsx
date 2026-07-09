@@ -34,8 +34,8 @@ export const CompleteToDoList: React.FC = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
-          placeholder="Add Todo"
+          type='text'
+          placeholder='Add Todo'
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
@@ -45,7 +45,7 @@ export const CompleteToDoList: React.FC = () => {
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}>
-            {todo.title} - {todo.completed ? "completed" : "not completed"}
+            {todo.title} - {todo.completed ? 'completed' : 'not completed'}
 
             <button
               style={{ marginLeft: '1rem' }}

@@ -33,7 +33,7 @@ export const FilteredToDoList: React.FC = () => {
   };
   
   const handleFilter = (
-    filter: "all" | "active" | "completed"
+    filter: 'all' | 'active' | 'completed'
   ) => {
     setFilter(filter);
   };
@@ -49,8 +49,8 @@ export const FilteredToDoList: React.FC = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
-          placeholder="Add Todo"
+          type='text'
+          placeholder='Add Todo'
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
@@ -66,10 +66,10 @@ export const FilteredToDoList: React.FC = () => {
       <ul>
         {filteredTodos.map((todo) => (
           <li key={todo.id}>
-            {todo.title} - {todo.completed ? "completed" : "not completed"}
+            {todo.title} - {todo.completed ? 'completed' : 'not completed'}
 
             <button
-              style={{ marginLeft: "1rem" }}
+              style={{ marginLeft: '1rem' }}
               onClick={() => markCompleted(todo.id)}
               disabled={todo.completed}
             >

@@ -55,12 +55,12 @@ test('ActiveCount shows number of active todos', () => {
   expect(screen.getByText(/1 active/i)).toBeInTheDocument();
 });
 
-// // 7. StyledToDoItem
-// test('StyledToDoItem renders todo item', () => {
-//   render(<StyledToDoItem todo={{ id: 1, title: 'Test', completed: true }} />);
-//   expect(screen.getByText('Test')).toBeInTheDocument();
-//   expect(screen.getByText(/completed/i)).toBeInTheDocument();
-// });
+// 7. StyledToDoItem
+test('StyledToDoItem renders todo item', () => {
+  render(<StyledToDoItem todo={{ id: 1, title: 'Test', completed: true }} />);
+  expect(screen.getByText('Test')).toBeInTheDocument();
+  expect(screen.getByText(/completed/i)).toBeInTheDocument();
+});
 
 // // 8. FetchToDos
 // test('FetchToDos renders with loading state', () => {
