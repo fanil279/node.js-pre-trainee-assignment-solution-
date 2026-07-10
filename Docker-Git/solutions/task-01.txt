@@ -1,0 +1,38 @@
+Task 01 - Initialize Repository and Basic Git Operations
+
+Git Commands Used
+
+1. mkdir my-first-repo
+   Creates a new project directory.
+
+2. cd my-first-repo
+   Moves into the project directory.
+
+3. git init
+   Initializes a new Git repository.
+
+4. git config user.name
+   Git was already configured with my username for this repository.
+
+5. git config user.email
+   Git was already configured with my email address for this repository.
+
+6. git add .gitignore
+   Stages the .gitignore file.
+
+7. git commit -m "chore: add .gitignore"
+   Creates the first commit containing only the .gitignore file.
+
+8. git add README.md package.json
+   Stages README.md and package.json.
+
+9. git commit -m "feat: add README and package.json"
+   Creates the second commit containing README.md and package.json.
+
+10. git log --oneline
+    Displays the commit history in a compact format.
+
+Output of git log --oneline
+
+63a03ad (HEAD -> main) feat: add README and package.json
+716de82 chore: add .gitignore
