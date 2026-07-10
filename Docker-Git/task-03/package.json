@@ -2,7 +2,7 @@
     "name": "docker-git",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "app.js",
     "engines": {
         "node": "24.x"
     },
