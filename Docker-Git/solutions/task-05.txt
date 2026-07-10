@@ -35,7 +35,7 @@ RUN npm run build
 RUN npm prune --omit=dev
 
 # Production stage
-FROM node:24-alpine
+FROM node:24-alpine AS production
 
 WORKDIR /app
 
@@ -68,7 +68,8 @@ REPOSITORY       TAG      SIZE
 typescript-app   single   225 MB
 typescript-app   multi    167 MB
 
-The multi-stage Docker image is 58 MB smaller because the final image contains only the compiled application and production dependencies. TypeScript source files, build tools, and development dependencies are excluded from the production image.
+The multi-stage Docker image is 58 MB smaller because the final image contains only the compiled application and production
+dependencies. TypeScript source files, build tools, and development dependencies are excluded from the production image.
 
 After adding the .dockerignore file, rebuilding the image was slightly faster because Docker sent fewer files to the build context.
 

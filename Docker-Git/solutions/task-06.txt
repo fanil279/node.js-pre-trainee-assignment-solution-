@@ -1,0 +1,113 @@
+Task 06 - Git Rebase and Clean History Management
+
+Commands Used
+
+1. git switch -c feature/user-authentication
+   Creates and switches to the feature/user-authentication branch.
+
+2. touch auth.js
+   Creates the authentication module file.
+
+3. git add auth.js
+   Stages the authentication module.
+
+4. git commit -m "feat(auth): add authentication module"
+   Creates the first feature commit.
+
+5. Modify package.json.
+
+6. git add package.json
+   Stages the package.json changes.
+
+7. git commit -m "chore: update package.json for authentication"
+   Creates the second commit.
+
+8. Modify package.json to introduce a typo fix.
+
+9. git add package.json
+
+10. git commit -m "fix: typo"
+    Creates the typo fix commit.
+
+11. touch middleware.js
+    Creates the middleware file.
+
+12. git add middleware.js
+
+13. git commit -m "feat(auth): add authentication middleware"
+    Adds the authentication middleware.
+
+14. touch auth.test.js
+    Creates the test file.
+
+15. git add auth.test.js
+
+16. git commit -m "test(auth): add authentication tests"
+    Adds authentication tests.
+
+17. git rebase -i HEAD~4
+    Starts an interactive rebase for the last four commits.
+
+18. Changed "pick" to "fixup" for the "fix: typo" commit and completed the rebase.
+
+19. git switch main
+    Switches back to the main branch.
+
+20. touch LICENSE
+    Creates a LICENSE file.
+
+21. git add LICENSE
+
+22. git commit -m "docs: add license"
+    Simulates another developer making changes on the main branch.
+
+23. git switch feature/user-authentication
+    Switches back to the feature branch.
+
+24. git rebase main
+    Rebases the feature branch onto the updated main branch.
+
+25. git switch main
+    Switches back to the main branch.
+
+26. git switch -c test-merge
+    Creates a separate branch for comparing the merge workflow.
+
+27. git merge feature/user-authentication
+    Merges the rebased feature branch.
+
+28. git log --graph --oneline --all
+    Displays the complete commit graph.
+
+29. git log --oneline
+    Displays the linear commit history.
+
+Before Interactive Rebase (git log --oneline)
+
+test(auth): add authentication tests
+feat(auth): add authentication middleware
+fix: typo
+chore: update package.json for authentication
+feat(auth): add authentication module
+
+After Interactive Rebase (git log --oneline)
+
+test(auth): add authentication tests
+feat(auth): add authentication middleware
+chore: update package.json for authentication
+feat(auth): add authentication module
+
+The "fix: typo" commit was squashed into the previous commit, resulting in a cleaner commit history.
+
+Rebase vs Merge
+
+Rebase is used to create a clean, linear commit history by replaying commits on top of another branch. It is useful for cleaning up local commits before merging a feature branch.
+
+Merge combines the histories of two branches while preserving the complete branch history. It creates a merge commit when necessary and is commonly used when integrating completed work into a shared branch.
+
+Challenges Encountered
+
+- I accidentally typed "it switch" instead of "git switch", resulting in a command not found error.
+- During the interactive rebase, I changed the "fix: typo" commit to "fixup" so it was automatically squashed into the previous commit.
+- After creating a new commit on the main branch, I successfully rebased the feature branch onto the updated main branch without conflicts.
+- I created a separate test-merge branch to compare the merge workflow after rebasing.
