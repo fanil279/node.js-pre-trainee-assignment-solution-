@@ -1,0 +1,60 @@
+Task 02 - Creating Branches and Basic Merge Operations
+
+Git Commands Used
+
+1. git switch -c feature/add-scripts
+   Creates and switches to the feature/add-scripts branch.
+
+2. git add package.json
+   Stages the changes made to package.json.
+
+3. git commit -m "feat: add npm scripts"
+   Commits the package.json changes on the feature branch.
+
+4. git branch -a
+   Displays all local and remote branches after creating feature/add-scripts.
+
+5. git switch main
+   Switches back to the main branch.
+
+6. git switch -c feature/add-dependencies
+   Creates and switches to the feature/add-dependencies branch from main.
+
+7. git switch main
+   Switches back to the main branch.
+
+8. git merge feature/add-scripts
+   Merges the feature/add-scripts branch into main.
+
+9. git branch -d feature/add-scripts
+   Deletes the merged feature/add-scripts branch.
+
+10. git branch -a
+    Displays the updated branch list after merging and deleting the feature branch.
+
+11. git log --graph --oneline --all
+    Displays the commit history as a graph.
+
+Output of git branch -a
+
+After creating feature/add-scripts:
+
+* feature/add-scripts
+  main
+
+After creating feature/add-dependencies:
+
+* feature/add-dependencies
+  feature/add-scripts
+  main
+
+After merging and deleting feature/add-scripts:
+
+  feature/add-dependencies
+* main
+
+Output of git log --graph --oneline --all
+
+* 9d264af (HEAD -> main) feat: add npm scripts
+* 63a03ad (feature/add-dependencies) feat: add README and package.json
+* 716de82 chore: add .gitignore

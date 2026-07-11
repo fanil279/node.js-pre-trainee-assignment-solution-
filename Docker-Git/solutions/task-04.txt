@@ -1,0 +1,62 @@
+Task 04 - Simulating and Resolving Merge Conflicts
+
+Git Commands Used
+
+1. git switch main
+   Switches to the main branch.
+
+2. git switch -c feature/update-readme-v1
+   Creates and switches to the first feature branch.
+
+3. git add README.md
+   Stages the README.md changes.
+
+4. git commit -m "docs: update README title to v1"
+   Commits the README title change on the first feature branch.
+
+5. git switch main
+   Switches back to the main branch.
+
+6. git switch -c feature/update-readme-v2
+   Creates and switches to the second feature branch.
+
+7. git add README.md
+   Stages the README.md changes.
+
+8. git commit -m "docs: update README title to v2"
+   Commits the README title change on the second feature branch.
+
+9. git switch main
+   Switches back to the main branch.
+
+10. git merge feature/update-readme-v1
+    Merges the first feature branch into main.
+
+11. git merge feature/update-readme-v2
+    Attempts to merge the second feature branch, resulting in a merge conflict.
+
+12. git add README.md
+    Stages the resolved README.md file.
+
+13. git commit -m "merge: resolve README title conflict"
+    Completes the merge after resolving the conflict.
+
+Conflict Markers
+
+<<<<<<< HEAD
+# My Awesome Project v1
+=======
+# My Super Project v2
+>>>>>>> feature/update-readme-v2
+
+Conflict Resolution
+
+I resolved the merge conflict by removing the conflict markers and combining both titles into a single title:
+
+# My Awesome Super Project v1 & v2
+
+After resolving the conflict, I staged the updated README.md file and completed the merge.
+
+Final Merge Commit Message
+
+merge: resolve README title conflict

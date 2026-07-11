@@ -1,0 +1,21 @@
+{
+    "name": "docker-git",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "engines": {
+        "node": "24.x"
+    },
+    "scripts": {
+        "start": "node app.js",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "devDependencies": {
+        "prettier": "^3.9.5"
+    }
+}

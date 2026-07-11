@@ -1,0 +1,133 @@
+Task 09: Mastering Docker Commands and Image Management
+
+==================================================
+Docker Commands Used
+====================
+
+Image Management
+
+* docker pull nginx:alpine - Download the Nginx Alpine image.
+* docker pull redis:7-alpine - Download the Redis Alpine image.
+* docker pull node:24-alpine - Download the Node.js Alpine image.
+* docker image ls - List all local Docker images.
+* docker image inspect nginx:alpine - Display detailed information about the Nginx image.
+* docker tag nginx:alpine nginx:my-alpine - Create a custom tag for the Nginx image.
+* docker save -o nginx-alpine.tar nginx:alpine - Save the image to a tar archive.
+* docker load -i nginx-alpine.tar - Load the image from the tar archive.
+* docker image rm nginx:my-alpine - Remove the custom tagged image.
+* docker image prune - Remove unused images.
+
+==================================================
+Container Lifecycle Management
+==============================
+
+* docker run -d --name nginx-server -p 8080:80 nginx:alpine - Run an Nginx container in detached mode with port mapping.
+* docker run -d --name redis-server --restart unless-stopped redis:7-alpine - Run a Redis container with a restart policy.
+* docker create --name node-container node:24-alpine - Create a Node.js container without starting it.
+* docker start node-container - Start the previously created Node.js container.
+* docker exec -it nginx-server sh - Open a shell inside the running Nginx container.
+* docker exec -it redis-server redis-cli - Open the Redis command-line interface inside the Redis container.
+* docker cp nginx-server:/etc/nginx/nginx.conf . - Copy a file from the container to the host.
+* docker cp index.html nginx-server:/usr/share/nginx/html/index.html - Copy a file from the host to the container.
+
+==================================================
+Monitoring and Troubleshooting
+==============================
+
+* docker stats - Monitor resource usage of running containers.
+* docker stats nginx-server - Display resource usage for a specific container.
+* docker logs nginx-server - View container logs.
+* docker logs -f nginx-server - Follow container logs in real time.
+* docker logs -t nginx-server - Display logs with timestamps.
+* docker inspect nginx-server - Display detailed configuration of the container.
+* docker volume create my-volume - Create a Docker volume.
+* docker volume ls - List Docker volumes.
+* docker volume inspect my-volume - Display detailed information about a Docker volume.
+* docker network ls - List Docker networks.
+* docker network inspect bridge - Inspect the default bridge network.
+
+==================================================
+Cleanup and Maintenance
+=======================
+
+* docker system df - Display Docker disk usage before cleanup.
+* docker stop nginx-server redis-server node-container - Stop all running containers.
+* docker rm nginx-server redis-server node-container - Remove the containers.
+* docker volume rm my-volume - Remove the Docker volume.
+* docker network prune - Remove unused Docker networks.
+* docker image prune - Remove unused Docker images.
+* docker system prune - Remove all unused Docker resources.
+* docker system prune -a - Remove all unused images and other resources.
+* docker system prune -a --volumes - Remove all unused resources, including volumes.
+* docker system df - Display Docker disk usage after cleanup.
+
+==================================================
+docker system df (Before Cleanup)
+=================================
+
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          5         5         634.3MB   0B (0%)
+Containers      5         2         1.249kB   0B (0%)
+Local Volumes   4         3         817.7kB   0B (0%)
+Build Cache     0         0         0B        0B
+
+==================================================
+docker system df (After Cleanup)
+================================
+
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          2         2         368.6MB   0B (0%)
+Containers      2         2         0B        0B
+Local Volumes   2         2         827.5kB   0B (0%)
+Build Cache     0         0         0B        0B
+
+==================================================
+Examples of Container Inspection
+================================
+
+Example command:
+
+docker inspect nginx-server
+
+This command displays detailed information about the container, including:
+
+* Container ID
+* Image
+* Environment variables
+* Network configuration
+* Mounted volumes
+* Port mappings
+* Restart policy
+* Container state
+
+==================================================
+Examples of Container Logs
+==========================
+
+Example commands:
+
+docker logs nginx-server
+
+docker logs -t nginx-server
+
+docker logs -f nginx-server
+
+These commands display the application logs, logs with timestamps, and live log output.
+
+==================================================
+Docker Commands I Found Most Useful
+===================================
+
+* docker ps
+* docker image ls
+* docker logs
+* docker logs -f
+* docker exec
+* docker inspect
+* docker stats
+* docker cp
+* docker volume ls
+* docker network ls
+* docker system df
+* docker system prune
+* docker image prune
