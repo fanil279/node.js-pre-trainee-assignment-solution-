@@ -1,0 +1,182 @@
+Task 10: Advanced Docker Networking and Data Persistence
+
+==================================================
+Network and Volume Commands Used
+================================
+
+Create custom bridge network:
+
+docker network create app-network
+
+Create custom bridge network with a specific subnet:
+
+docker network create --driver bridge --subnet 172.20.0.0/16 custom-network
+
+List Docker networks:
+
+docker network ls
+
+Inspect network configuration:
+
+docker network inspect app-network
+
+docker network inspect custom-network
+
+Create a named volume:
+
+docker volume create mongo-data
+
+List Docker volumes:
+
+docker volume ls
+
+Inspect volume details:
+
+docker volume inspect mongo-data
+
+Run MongoDB on the custom network with a named volume:
+
+docker run -d --name mongodb --network app-network -v mongo-data:/data/db -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password mongo
+
+Run Mongo Express on the same network:
+
+docker run -d --name mongo-express --network app-network -p 8081:8081 -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin -e ME_CONFIG_MONGODB_ADMINPASSWORD=password -e ME_CONFIG_MONGODB_SERVER=mongodb mongo-express
+
+Run a Node.js container on the same network:
+
+docker run -it --name node-app --network app-network node:24-alpine sh
+
+Test connectivity from the Node.js container:
+
+ping mongodb
+
+Create a bind mount:
+
+docker run --rm -it -v ${PWD}/app:/app alpine sh
+
+Create a tmpfs mount:
+
+docker run --rm -it --tmpfs /temp alpine sh
+
+Stop MongoDB:
+
+docker stop mongodb
+
+Start MongoDB:
+
+docker start mongodb
+
+Create additional isolated networks:
+
+docker network create frontend-network
+
+docker network create backend-network
+
+Run containers on separate networks:
+
+docker run -d --name frontend --network frontend-network nginx:alpine
+
+docker run -d --name backend --network backend-network nginx:alpine
+
+Attempt communication between isolated containers:
+
+docker exec -it frontend ping backend
+
+Connect a container to another network:
+
+docker network connect backend-network frontend
+
+Remove containers:
+
+docker rm mongodb mongo-express node-app frontend backend
+
+Remove volume:
+
+docker volume rm mongo-data
+
+Remove custom networks:
+
+docker network rm app-network custom-network frontend-network backend-network
+
+==================================================
+Network Topology
+================
+
+                app-network
+ ---------------------------------------
+ |                                     |
+ |     mongodb                         |
+ |         ^                           |
+ |         |                           |
+ |     mongo-express                   |
+ |         ^                           |
+ |         |                           |
+ |      node-app                       |
+ ---------------------------------------
+
+frontend-network               backend-network
+
+frontend                        backend
+
+After connecting:
+
+frontend
+|
++--------------------------> backend-network
+
+==================================================
+docker network ls
+=================
+
+NETWORK ID     NAME             DRIVER    SCOPE
+56903dbe20d4   app-network      bridge    local
+d0f64301362d   bridge           bridge    local
+e08a59150a0d   custom-network   bridge    local
+b63174b33ab8   host             host      local
+43fd9f432227   none             null      local
+
+==================================================
+docker volume ls
+================
+
+DRIVER    VOLUME NAME
+local     bd1f7822e3ef34b9b7330d653a51be4cfa3f77ccff4196ba376698058c6aa9a6
+local     cae9ea579fa381a7ec7b9081477353d4a599f7bdad361f2f6a35cb3fd3283c24
+local     mongo-data
+
+==================================================
+Container Communication Test Results
+====================================
+
+* MongoDB container was successfully started on app-network.
+* Mongo Express was successfully started on app-network.
+* Node.js container was started on app-network.
+* Containers on the same custom network can communicate using container names as hostnames.
+* Mongo Express was configured to connect to MongoDB using the hostname "mongodb".
+* Named volume "mongo-data" persisted database data after the MongoDB container was stopped and started again.
+* Containers on different custom networks are isolated and cannot communicate until connected to the same network.
+* A container can be connected to multiple Docker networks using the docker network connect command.
+
+==================================================
+Volume Types Used
+=================
+
+Named Volume
+
+* Example: mongo-data
+* Managed by Docker.
+* Stores persistent database data.
+* Data remains available even if the container is removed.
+
+Bind Mount
+
+* Example: -v ${PWD}/app:/app
+* Maps a directory from the host machine into the container.
+* Commonly used during development because file changes on the host are immediately visible inside the container.
+
+tmpfs Mount
+
+* Example: --tmpfs /temp
+* Stores data only in the container's memory (RAM).
+* Data is automatically removed when the container stops.
+* Useful for temporary files and sensitive information that should not be written to disk.
