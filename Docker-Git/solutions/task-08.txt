@@ -1,0 +1,83 @@
+Task 08 - Simulating Team Git Workflow with Multiple Remotes
+
+Remote Configuration (git remote -v)
+
+fork      https://github.com/fanil279/team-workflow-fork.git (fetch)
+fork      https://github.com/fanil279/team-workflow-fork.git (push)
+upstream  https://github.com/fanil279/team-workflow-main.git (fetch)
+upstream  https://github.com/fanil279/team-workflow-main.git (push)
+
+Feature Branch Workflow Commands
+
+git clone https://github.com/fanil279/team-workflow-main.git
+
+git remote rename origin upstream
+
+git remote add fork https://github.com/fanil279/team-workflow-fork.git
+
+git push -u fork main
+
+git switch -c feature/user-profile
+
+git add profile.js
+git commit -m "feat(profile): create profile page"
+
+git add profile.js
+git commit -m "feat(profile): add avatar upload"
+
+git add profile.js
+git commit -m "fix(profile): validate uploaded image"
+
+git push -u fork feature/user-profile
+
+git switch main
+
+git merge --no-ff feature/user-profile
+
+git push upstream main
+
+git switch feature/user-profile
+
+git add profile.js
+git commit -m "fix(profile): improve avatar validation"
+
+git commit --amend
+
+git push --force-with-lease fork feature/user-profile
+
+git switch main
+
+git add CHANGELOG.md
+git commit -m "docs: add changelog"
+
+git push upstream main
+
+git fetch upstream
+
+git merge upstream/main
+
+git push fork main
+
+Strategy for Handling Upstream Changes
+
+1. Fetch the latest changes from the upstream repository using:
+   git fetch upstream
+
+2. Switch to the local main branch.
+
+3. Merge the latest upstream changes into the local main branch:
+   git merge upstream/main
+
+4. Push the updated main branch to the fork repository:
+   git push fork main
+
+5. If working on a feature branch, rebase or merge the updated main branch before continuing development to keep the branch up to date.
+
+Best Practices for Commit Messages Learned
+
+- Use clear and descriptive commit messages.
+- Follow the imperative mood (e.g., "add", "fix", "update").
+- Keep each commit focused on a single logical change.
+- Use conventional commit prefixes such as feat:, fix:, docs:, chore:, and refactor:.
+- Write small, meaningful commits instead of one large commit.
+- Amend or squash commits before creating a pull request when appropriate to maintain a clean project history.
