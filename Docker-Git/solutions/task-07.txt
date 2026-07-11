@@ -1,0 +1,148 @@
+Task 07: Orchestrating Multiple Services with Docker Compose
+
+==================================================
+docker-compose.yml
+==================
+
+version: '3.9'
+
+services:
+    api:
+        build: .
+        container_name: node_api
+
+        ports:
+            - '3000:3000'
+
+        environment:
+            PORT: 3000
+            DB_HOST: postgres
+            DB_PORT: ${DB_PORT}
+            DB_USER: ${DB_USER}
+            DB_PASSWORD: ${DB_PASSWORD}
+            DB_NAME: ${DB_NAME}
+
+        depends_on:
+            - postgres
+
+    postgres:
+        image: postgres:16
+
+        container_name: postgres_db
+
+        restart: unless-stopped
+
+        environment:
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_NAME}
+
+        ports:
+            - '5432:5432'
+
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+
+    pgadmin:
+        image: dpage/pgadmin4
+
+        container_name: pgadmin
+
+        restart: unless-stopped
+
+        environment:
+            PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+            PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+
+        ports:
+            - '5050:80'
+
+        depends_on:
+            - postgres
+
+volumes:
+    postgres_data:
+
+
+==================================================
+Docker Compose Commands Used
+============================
+
+docker compose up
+
+docker compose up --build
+
+docker compose up -d
+
+docker ps
+
+docker compose logs
+
+docker compose logs api
+
+docker compose logs postgres
+
+docker compose logs pgadmin
+
+docker compose down -v
+
+docker image prune -a
+
+==================================================
+URLs and Credentials
+====================
+
+Node.js API
+
+Base URL:
+http://localhost:3000
+
+Health Endpoint:
+http://localhost:3000/health
+
+Data Endpoint:
+http://localhost:3000/data
+
+---
+
+pgAdmin
+
+URL:
+http://localhost:5050
+
+Email:
+${PGADMIN_EMAIL}
+
+Password:
+${PGADMIN_PASSWORD}
+
+---
+
+PostgreSQL
+
+Host:
+postgres
+
+Port:
+${DB_PORT}
+
+Database:
+${DB_NAME}
+
+Username:
+${DB_USER}
+
+Password:
+${DB_PASSWORD}
+
+
+==================================================
+Output of docker compose ps
+===========================
+
+```text
+NAME          IMAGE            COMMAND                  SERVICE     CREATED         STATUS         PORTS
+node_api      task-07-api      "docker-entrypoint.s…"   api         2 minutes ago   Up 2 minutes   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+postgres_db   postgres:16      "docker-entrypoint.s…"   postgres    2 minutes ago   Up 2 minutes   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+pgadmin       dpage/pgadmin4   "/entrypoint.sh"         pgadmin     2 minutes ago   Up 2 minutes   0.0.0.0:5050->80/tcp, [::]:5050->80/tcp
+```
