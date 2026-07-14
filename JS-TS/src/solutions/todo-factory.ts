@@ -6,8 +6,10 @@ export function createTodo(input: NewTodo): Todo {
     return {
         id: nextId++,
         title: input.title,
-        description: input.description,
+        ...(input.description !== undefined && {
+            description: input.description
+        }),
         status: TodoStatus.PENDING,
         createdAt: new Date(),
-    } as Todo;
+    };
 }
