@@ -277,12 +277,10 @@ class TodoServer extends EventEmitter {
                     } else if (completedFilter === 'false') {
                         todos = todos.filter((todo) => !todo.completed);
                     } else {
-                        sendJson(res, 400, {
+                        return sendJson(res, 400, {
                             success: false,
                             error: 'Invalid completed query parameter. Use true or false.',
                         });
-
-                        return;
                     }
                 }
 
@@ -294,7 +292,7 @@ class TodoServer extends EventEmitter {
                     requestInfo: {
                         method: req.method,
                         url: req.url,
-                        userAgent: req.headers['user-agent'],
+                        userAgent: req.headers['user-agent'], // This header contains web browser name, its engine, the operating system version, and device type.
                         ip: req.socket.remoteAddress,
                     },
                 });
@@ -324,12 +322,10 @@ class TodoServer extends EventEmitter {
                         },
                     });
 
-                    sendJson(res, 404, {
+                    return sendJson(res, 404, {
                         success: false,
                         error: 'Todo not found',
                     });
-
-                    return;
                 }
 
                 this.emit('todoViewed', {
@@ -367,12 +363,10 @@ class TodoServer extends EventEmitter {
                         },
                     });
 
-                    sendJson(res, 400, {
+                    return sendJson(res, 400, {
                         success: false,
                         errors: errors,
                     });
-
-                    return;
                 }
 
                 const todo = {
@@ -421,12 +415,10 @@ class TodoServer extends EventEmitter {
                         },
                     });
 
-                    sendJson(res, 404, {
+                    return sendJson(res, 404, {
                         success: false,
                         error: 'Todo does not exist',
                     });
-
-                    return;
                 }
 
                 const body = await parseBody(req);
@@ -445,12 +437,10 @@ class TodoServer extends EventEmitter {
                         },
                     });
 
-                    sendJson(res, 400, {
+                    return sendJson(res, 400, {
                         success: false,
                         errors: errors,
                     });
-
-                    return;
                 }
 
                 const oldTodo = { ...todo };
@@ -490,8 +480,6 @@ class TodoServer extends EventEmitter {
                     success: true,
                     data: todo,
                 });
-
-                return;
             }
 
             if (method === 'DELETE' && parseIdFromPath(pathname) !== null) {
@@ -512,12 +500,10 @@ class TodoServer extends EventEmitter {
                         },
                     });
 
-                    sendJson(res, 404, {
+                    return sendJson(res, 404, {
                         success: false,
                         error: 'Todo index is not found',
                     });
-
-                    return;
                 }
 
                 const [todo] = this.todos.splice(todoIndex, 1);
@@ -544,8 +530,6 @@ class TodoServer extends EventEmitter {
                     success: true,
                     data: this.analytics.getStats(),
                 });
-
-                return;
             }
 
             if (method === 'GET' && pathname === '/events') {
@@ -557,8 +541,6 @@ class TodoServer extends EventEmitter {
                     success: true,
                     data: events,
                 });
-
-                return;
             }
 
             sendJson(res, 404, {
