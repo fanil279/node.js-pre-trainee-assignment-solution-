@@ -231,8 +231,6 @@ class TodoServer {
                 success: false,
                 errors: errors,
             });
-
-            return;
         }
 
         const todo = this.todoService.update(id, body);
