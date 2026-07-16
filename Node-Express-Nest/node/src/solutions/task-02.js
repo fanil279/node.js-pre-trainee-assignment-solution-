@@ -3,42 +3,48 @@ const path = require('path');
 const { Transform } = require('stream');
 const { pipeline } = require('stream/promises');
 
+// Converts CSV text to Js objects
 class CSVParser extends Transform {
     constructor(options = {}) {
         super({ ...options, objectMode: true });
 
-        this.headers = null;
-        this.lineNumber = 0;
+        this.headers = null; // CSV headers
+        this.lineNumber = 0; // In order to understand if it is the 1st line being read (which is headers)
         this.buffer = '';
     }
 
+    // Called internally by Node.js every time a new chunk of data arrives
     _transform(chunk, _encoding, callback) {
         this.buffer += chunk.toString();
 
         const lines = this.buffer.split('\n');
-        this.buffer = lines.pop();
+        this.buffer = lines.pop(); // Extracts from lines last incomplete chunk and assigns it to buffer
 
         for (const line of lines) {
             this.parseLine(line);
         }
 
-        callback();
+        // Without callback data transformation stops
+        callback(); // Node.js calls this callback to indicate that the current chunk is transformed
     }
 
+    // When file ends Node.js automatically calls _flush
     _flush(callback) {
         if (!this.buffer || !this.headers) return callback();
 
-        this.parseLine(this.buffer);
+        this.parseLine(this.buffer); // Handles latest ommited data chunk that does not contain \n
         callback();
     }
 
     parseLine(line) {
-        // If the line ends with a carriage return, remove it to avoid issues with Windows-style line endings.
+        // If the line ends with a carriage return, remove it to avoid issues with Windows-style line endings
         const cleanLine = line.endsWith('\r') ? line.slice(0, -1) : line;
 
         if (this.lineNumber === 0) {
+            // If headers
             this.headers = cleanLine.split(',');
         } else {
+            // If rows
             const values = cleanLine.split(',');
 
             if (values.length !== this.headers.length) {
@@ -50,6 +56,8 @@ class CSVParser extends Transform {
                 record[this.headers[i]] = values[i];
             }
 
+            // This is the method inherited from Transform class
+            // Passes the Js object to the next stream
             this.push(record);
         }
 
@@ -57,6 +65,7 @@ class CSVParser extends Transform {
     }
 }
 
+// Cleans and normalises the data recived from CsvParser
 class DataTransformer extends Transform {
     constructor(options = {}) {
         super({ ...options, objectMode: true });
@@ -87,10 +96,10 @@ class CSVWriter extends Transform {
         let csv = '';
 
         if (!this.headerWritten) {
-            csv += Object.keys(record).join(',') + '\n';
-            csv += Object.values(record).join(',');
+            csv += Object.keys(record).join(',') + '\n'; // Construct headers
+            csv += Object.values(record).join(','); // Construct rows
 
-            this.headerWritten = true;
+            this.headerWritten = true; // Changed to true so that headers are not wriiten for every row
         } else {
             csv += '\n';
             csv += Object.values(record).join(',');
@@ -192,6 +201,7 @@ function standardizeDate(date) {
 
     function isValidDate(year, month, day) {
         const parsedDate = new Date(Number(year), Number(month) - 1, Number(day));
+
         return (
             parsedDate.getFullYear() === Number(year) &&
             parsedDate.getMonth() + 1 === Number(month) &&

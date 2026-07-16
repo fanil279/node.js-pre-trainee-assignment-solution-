@@ -74,9 +74,28 @@ async function fixRaceCondition() {
     const files = await createTestFiles();
 
     /*
-     * Using Promise.all() removes the need for a shared counter and manual
-     * completion tracking while keeping the results in the same order as
-     * the input files.
+     * Original problem:
+     * The code started multiple asynchronous fs.readFile() operations in parallel
+     * and used a shared counter to determine when all work had finished.
+     *
+     * This approach had several issues:
+     * - It relied on shared mutable state (counter and results array).
+     * - If a file failed to read, the counter was never incremented, so
+     *   "All files processed" might never be printed.
+     * - When a missing file was created inside catch(), the code did not wait
+     *   for writeFile() to finish or read the file again, leaving the result
+     *   incomplete.
+     * - Completion depended on manually tracking asynchronous operations,
+     *   which is error-prone and difficult to maintain.
+     *
+     * Solution:
+     * Promise.all() is used to coordinate all file-processing operations.
+     * Each file is processed independently in an async function, and Promise.all()
+     * waits until every Promise has completed. Missing files are recreated,
+     * awaited, read again, and included in the final results. This removes the
+     * need for a shared counter, guarantees that all operations finish before
+     * continuing, preserves the original file order, and produces cleaner,
+     * more reliable code.
      */
     try {
         const results = await Promise.all(
@@ -107,9 +126,23 @@ async function fixRaceCondition() {
 
 async function fixCallbackHell(userId) {
     /*
-     * Using async/await replaces deeply nested callbacks with sequential,
-     * readable code while allowing a single try/catch block to handle
-     * asynchronous and JSON parsing errors.
+     * Original problem:
+     * The code suffered from "callback hell", where multiple asynchronous
+     * operations were nested inside one another. Each fs.readFile() depended
+     * on the previous one, creating deeply nested callbacks that were difficult
+     * to read, maintain, and debug.
+     *
+     * Additionally, every asynchronous step required its own error handling,
+     * resulting in repeated if (err) checks and callback(err) calls throughout
+     * the code.
+     *
+     * Solution:
+     * async/await replaces nested callbacks with sequential, top-to-bottom code
+     * that behaves like synchronous code while remaining non-blocking. Each
+     * asynchronous operation is awaited before continuing, making the execution
+     * flow much easier to follow. A single try/catch block handles errors from
+     * file operations and JSON parsing, reducing code duplication and improving
+     * readability and maintainability.
      */
 
     try {
@@ -142,9 +175,17 @@ async function fixCallbackHell(userId) {
 
 async function fixMixedAsync() {
     /*
-     * Using async/await consistently avoids mixing promises and callbacks,
-     * makes the execution flow easier to follow, and centralizes error
-     * handling in a single try/catch block.
+     * Original problem:
+     * The code mixed different asynchronous patterns by using Promises for
+     * reading files and traditional callbacks for writing files. This resulted
+     * in inconsistent control flow, nested callbacks, and scattered error
+     * handling, making the code more difficult to read and maintain.
+     *
+     * Solution:
+     * The code was refactored to use async/await with the Promise-based
+     * fs.promises API for every asynchronous operation. This provides a
+     * consistent coding style, removes callback nesting, and centralizes
+     * error handling using try/catch while keeping the execution non-blocking.
      */
 
     try {

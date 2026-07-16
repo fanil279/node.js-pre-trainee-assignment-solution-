@@ -202,8 +202,15 @@ class TodoServer extends EventEmitter {
 
     _wireDefaultListeners() {
         const remember = (eventType) => (data) => {
-            this.recentEvents.push({ eventType, timestamp: nowISO(), data });
-            if (this.recentEvents.length > 100) this.recentEvents.shift();
+            this.recentEvents.push({
+                eventType,
+                timestamp: nowISO(),
+                data,
+            });
+
+            if (this.recentEvents.length > 100) {
+                this.recentEvents.shift();
+            }
         };
 
         [
