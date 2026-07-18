@@ -29,6 +29,7 @@ export const AddToDo: React.FC = () => {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                 />
+
                 <button type="submit">Add</button>
             </form>
 

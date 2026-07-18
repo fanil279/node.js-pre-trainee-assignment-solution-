@@ -4,6 +4,8 @@ import { ToDoManager } from './solutions/todo-manager';
 const manager = new ToDoManager();
 
 async function main(): Promise<void> {
+    // process.argv[0]: The absolute path to the Node.js executable.
+    // process.argv[1]: The absolute path to the JavaScript file being executed.
     const [, , command, ...args] = process.argv;
 
     await manager.init();

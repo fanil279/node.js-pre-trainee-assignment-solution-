@@ -7,18 +7,27 @@ export const FetchToDos: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        /*
+         * When a React component unmounts (e.g., the user navigates away) while a fetch is still running,
+         * the network request keeps downloading in the background. When it finishes, React will try to update
+         * the state of a component that no longer exists, which can cause memory leaks, bugs, and sluggish performance.
+         */
         const controller = new AbortController();
 
         const fetchData = async () => {
             try {
                 const url = 'https://jsonplaceholder.typicode.com/todos';
 
+                // Passes the controller's signal to the fetch options.
+                // This connects this specific fetch request to our controller.
                 const response = await fetch(url, { signal: controller.signal });
 
                 const data = await response.json();
 
                 setTodos(data.slice(0, 5));
             } catch (error: any) {
+                // When a fetch is aborted, it automatically throws an error.
+                // I check the error name so that a fake error message is not dispalyed to the user.
                 if (error.name !== 'AbortError') {
                     setError(error.message);
                 }
@@ -29,6 +38,7 @@ export const FetchToDos: React.FC = () => {
 
         fetchData();
 
+        // Calling abort() instantly cancels the ongoing fetch request over the network.
         return () => controller.abort();
     }, []);
 
