@@ -1,6 +1,7 @@
 import { Controller, ParseIntPipe, Get, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 import { LoggerService } from '../logger/logger.service';
+import { UserResponseDto } from './dto/user-response.dto';
 
 @Controller('user')
 export class UserController {
@@ -10,7 +11,7 @@ export class UserController {
     ) {}
 
     @Get(':id')
-    findAll(@Param('id', ParseIntPipe) id: number): { id: number; name: string } {
+    findAll(@Param('id', ParseIntPipe) id: number): UserResponseDto {
         this.logger.log('Request reached "user/users" controller');
 
         return this.userService.findUser(id);

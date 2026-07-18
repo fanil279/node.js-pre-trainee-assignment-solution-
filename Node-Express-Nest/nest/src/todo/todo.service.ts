@@ -9,6 +9,8 @@ import { UpdateTodoDto } from './dto/update-todo.dto';
 @Injectable()
 export class TodoService {
     constructor(
+        // Finds and injects the TypeORM database repository, into
+        // repository param, specifically generated for the TodoEntity
         @InjectRepository(TodoEntity)
         private readonly repository: Repository<TodoEntity>,
     ) {}
