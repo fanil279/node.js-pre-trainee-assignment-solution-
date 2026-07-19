@@ -31,6 +31,7 @@ export class TodoEntity {
     createdAt!: Date;
 
     @ManyToOne(() => UserEntity, (user) => user.todos, { eager: true })
+    // @JoinColumn() marks the owning side of the relationship and specifies which database column will store the foreign key.
     @JoinColumn({ name: 'user_id' })
     user!: UserEntity;
 }

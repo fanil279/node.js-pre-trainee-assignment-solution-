@@ -80,4 +80,6 @@ async function seed(): Promise<void> {
     }
 }
 
+// void seed() intentionally ignores the returned Promise and continues execution
+// without waiting, which is often used when we don't need the returned value.
 void seed();

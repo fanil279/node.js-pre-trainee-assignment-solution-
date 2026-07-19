@@ -34,6 +34,8 @@ SELECT
 FROM users AS u
 INNER JOIN todos AS t
     ON u.id = t.user_id
+-- Including 'u.name' here is mandatory so the SELECT clause can display it safely
+-- Groups rows by unique ID combo to prevent matching users with identical names
 GROUP BY u.id, u.name;
 
 SELECT

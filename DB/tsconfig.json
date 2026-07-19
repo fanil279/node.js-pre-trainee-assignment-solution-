@@ -9,7 +9,12 @@
 
         "types": ["node"],
 
+        // "experimentalDecorators": true allows the use of @Decorators (like @Entity()).
+        // This is required so dependencies like TypeORM do not throw syntax errors.
         "experimentalDecorators": true,
+
+        // "emitDecoratorMetadata": true saves data types into the final JavaScript file during compilation.
+        // This allows TypeORM to automatically figure out and manage table relations and dependencies at runtime.
         "emitDecoratorMetadata": true,
 
         "sourceMap": true,

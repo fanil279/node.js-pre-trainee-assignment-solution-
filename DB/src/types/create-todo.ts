@@ -1,4 +1,3 @@
-import type { UserEntity } from '../entities/User';
 import type { Status } from '../entities/Todo';
 
 export interface CreateTodo {

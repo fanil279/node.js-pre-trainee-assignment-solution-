@@ -35,5 +35,5 @@ Issues Encountered
 ------------------
 
 No issues were encountered while creating the index and analyzing the query execution plan.
-However, I firt had to learn what is EXPLAIN ANALYZE as I had not worked with it before. 
+However, I first had to learn what is EXPLAIN ANALYZE as I had not worked with it before. 
 */
