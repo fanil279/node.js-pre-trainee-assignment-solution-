@@ -48,7 +48,7 @@ Commands Used
 17. git rebase -i HEAD~4
     Starts an interactive rebase for the last four commits.
 
-18. Changed "pick" to "fixup" for the "fix: typo" commit and completed the rebase.
+18. Changed "pick" to "squash" for the "fix: typo" commit and completed the rebase.
 
 19. git switch main
     Switches back to the main branch.
@@ -108,6 +108,7 @@ Merge combines the histories of two branches while preserving the complete branc
 Challenges Encountered
 
 - I accidentally typed "it switch" instead of "git switch", resulting in a command not found error.
-- During the interactive rebase, I changed the "fix: typo" commit to "squash" so it was combined with the previous commit. Git then opened the commit message editor, where I kept the previous commit message and completed the rebase.
+- During the interactive rebase, I changed the "fix: typo" commit to "squash" so it was combined with the previous commit.
+- Git then opened the commit message editor, where I kept the previous commit message and completed the rebase.
 - After creating a new commit on the main branch, I successfully rebased the feature branch onto the updated main branch without conflicts.
 - I created a separate test-merge branch to compare the merge workflow after rebasing.

@@ -36,7 +36,7 @@ git merge --no-ff feature/user-profile
 
 git push upstream main
 
-git switch feature/user-profile
+git switch feature/user-profile // Here I imitate that pr is not approaved and changes are required
 
 git add profile.js
 git commit -m "fix(profile): improve avatar validation"
@@ -52,9 +52,11 @@ git commit -m "docs: add changelog"
 
 git push upstream main
 
-git fetch upstream
+git fetch upstream // Downloads all new commits from the team repo without touching local files.
 
-git merge upstream/main
+git log main..upstream/main // Inspects if merge would be safe
+
+git merge upstream/main // Combines the freshly fetched upstream commits into my local main branch.
 
 git push fork main
 

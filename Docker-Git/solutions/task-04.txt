@@ -35,7 +35,7 @@ Git Commands Used
 11. git merge feature/update-readme-v2
     Attempts to merge the second feature branch, resulting in a merge conflict.
 
-12. git add README.md
+12. git add README.md // After conflict resolved
     Stages the resolved README.md file.
 
 13. git commit -m "merge: resolve README title conflict"
